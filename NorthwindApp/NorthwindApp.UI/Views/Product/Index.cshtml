@@ -1,0 +1,74 @@
+﻿@model IEnumerable<ProductViewModel>
+@{
+    ViewBag.Title = "Products";
+}
+
+<div class="row category-list">
+    <div class="row category-element">
+        <div class="col-md-1 col-sm-1 col-xs-1">
+            <h4>Id</h4>
+        </div>
+        <div class="col-md-2 col-sm-2 col-xs-2">
+            <h4>Name</h4>
+        </div>
+        <div class="col-md-2 col-sm-2 col-xs-2">
+            <p>Quantity Per Unit</p>
+        </div>
+        <div class="col-md-1 col-sm-1 col-xs-1">
+            <p>Unit Price</p>
+        </div>
+        <div class="col-md-1 col-sm-1 col-xs-1">
+            <p>Units In Stock</p>
+        </div>
+        <div class="col-md-1 col-sm-1 col-xs-1">
+            <p>Units On Order</p>
+        </div>
+        <div class="col-md-1 col-sm-1 col-xs-1">
+            <p>Reorder Level</p>
+        </div>
+        <div class="col-md-1 col-sm-1 col-xs-1">
+            <p>Discontinued</p>
+        </div>
+        <div class="col-md-1 col-sm-1 col-xs-1">
+            <p>Supplier</p>
+        </div>
+        <div class="col-md-1 col-sm-1 col-xs-1">
+            <p>Category</p>
+        </div>
+    </div>
+    @foreach (var product in Model)
+    {
+        <div class="row category-element">
+            <div class="col-md-1 col-sm-1 col-xs-1">
+                <h4>@product.ProductId</h4>
+            </div>
+            <div class="col-md-2 col-sm-2 col-xs-2">
+                <h4>@product.ProductName</h4>
+            </div>
+            <div class="col-md-2 col-sm-2 col-xs-2">
+                <p>@product.QuantityPerUnit</p>
+            </div>
+            <div class="col-md-1 col-sm-1 col-xs-1">
+                <p>@product.UnitPrice</p>
+            </div>
+            <div class="col-md-1 col-sm-1 col-xs-1">
+                <p>@product.UnitsInStock</p>
+            </div>
+            <div class="col-md-1 col-sm-1 col-xs-1">
+                <p>@product.UnitsOnOrder</p>
+            </div>
+            <div class="col-md-1 col-sm-1 col-xs-1">
+                <p>@product.ReorderLevel</p>
+            </div>
+            <div class="col-md-1 col-sm-1 col-xs-1">
+                <p>@product.Discontinued</p>
+            </div>
+            <div class="col-md-1 col-sm-1 col-xs-1">
+                <p>@product.SupplierId</p>
+            </div>
+            <div class="col-md-1 col-sm-1 col-xs-1">
+                <p>@product.CategoryId</p>
+            </div>
+        </div>
+    }
+</div>

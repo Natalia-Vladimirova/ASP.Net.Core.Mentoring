@@ -5,12 +5,21 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="AutoMapper.Extensions.Microsoft.DependencyInjection" Version="6.0.0" />
     <PackageReference Include="Microsoft.AspNetCore.All" Version="2.0.8" />
     <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="2.0.3" />
   </ItemGroup>
 
   <ItemGroup>
     <DotNetCliToolReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Tools" Version="2.0.4" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\NorthwindApp.DAL.Interfaces\NorthwindApp.DAL.Interfaces.csproj" />
+    <ProjectReference Include="..\NorthwindApp.DAL\NorthwindApp.DAL.csproj" />
+    <ProjectReference Include="..\NorthwindApp.Models\NorthwindApp.Models.csproj" />
+    <ProjectReference Include="..\NorthwindApp.Services.Interfaces\NorthwindApp.Services.Interfaces.csproj" />
+    <ProjectReference Include="..\NorthwindApp.Services\NorthwindApp.Services.csproj" />
   </ItemGroup>
 
 </Project>

@@ -1,10 +1,7 @@
-﻿using System.ComponentModel.DataAnnotations;
-
-namespace NorthwindApp.DAL.Entities
+﻿namespace NorthwindApp.Models
 {
-    public class SupplierDto
+    public class Supplier
     {
-        [Key]
         public int SupplierId { get; set; }
 
         public string CompanyName { get; set; }

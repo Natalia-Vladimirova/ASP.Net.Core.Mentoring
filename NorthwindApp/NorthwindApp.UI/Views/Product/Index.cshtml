@@ -3,47 +3,47 @@
     ViewBag.Title = "Products";
 }
 
-<div class="row category-list">
-    <div class="row category-element">
+<div class="row items-list">
+    <div class="row list-element">
         <div class="col-md-1 col-sm-1 col-xs-1">
-            <h4>Id</h4>
+            <label>Id</label>
         </div>
         <div class="col-md-2 col-sm-2 col-xs-2">
-            <h4>Name</h4>
+            <label>Name</label>
         </div>
         <div class="col-md-2 col-sm-2 col-xs-2">
-            <p>Quantity Per Unit</p>
+            <label>Quantity Per Unit</label>
         </div>
         <div class="col-md-1 col-sm-1 col-xs-1">
-            <p>Unit Price</p>
+            <label>Unit Price</label>
         </div>
         <div class="col-md-1 col-sm-1 col-xs-1">
-            <p>Units In Stock</p>
+            <label>Units In Stock</label>
         </div>
         <div class="col-md-1 col-sm-1 col-xs-1">
-            <p>Units On Order</p>
+            <label>Units On Order</label>
         </div>
         <div class="col-md-1 col-sm-1 col-xs-1">
-            <p>Reorder Level</p>
+            <label>Reorder Level</label>
         </div>
         <div class="col-md-1 col-sm-1 col-xs-1">
-            <p>Discontinued</p>
+            <label>Discontinued</label>
         </div>
         <div class="col-md-1 col-sm-1 col-xs-1">
-            <p>Supplier</p>
+            <label>Supplier</label>
         </div>
         <div class="col-md-1 col-sm-1 col-xs-1">
-            <p>Category</p>
+            <label>Category</label>
         </div>
     </div>
     @foreach (var product in Model)
     {
-        <div class="row category-element">
+        <div class="row list-element">
             <div class="col-md-1 col-sm-1 col-xs-1">
-                <h4>@product.ProductId</h4>
+                <p>@product.ProductId</p>
             </div>
             <div class="col-md-2 col-sm-2 col-xs-2">
-                <h4>@product.ProductName</h4>
+                <p class="bold">@product.ProductName</p>
             </div>
             <div class="col-md-2 col-sm-2 col-xs-2">
                 <p>@product.QuantityPerUnit</p>

@@ -1,7 +1,10 @@
-﻿namespace NorthwindApp.DAL.Entities
+﻿using System.ComponentModel.DataAnnotations;
+
+namespace NorthwindApp.DAL.Entities
 {
     public class ProductDto
     {
+        [Key]
         public int ProductId { get; set; }
 
         public string ProductName { get; set; }

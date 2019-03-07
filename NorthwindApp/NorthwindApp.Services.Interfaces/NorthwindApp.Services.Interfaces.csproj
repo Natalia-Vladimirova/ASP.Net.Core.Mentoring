@@ -5,9 +5,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\NorthwindApp.DAL.Interfaces\NorthwindApp.DAL.Interfaces.csproj" />
     <ProjectReference Include="..\NorthwindApp.Models\NorthwindApp.Models.csproj" />
-    <ProjectReference Include="..\NorthwindApp.Services.Interfaces\NorthwindApp.Services.Interfaces.csproj" />
   </ItemGroup>
 
 </Project>

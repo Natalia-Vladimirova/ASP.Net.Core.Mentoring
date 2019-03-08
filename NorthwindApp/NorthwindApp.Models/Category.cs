@@ -1,11 +1,7 @@
 ﻿namespace NorthwindApp.Models
 {
-    public class Category
+    public class Category : BaseCategory
     {
-        public int CategoryId { get; set; }
-
-        public string CategoryName { get; set; }
-
         public string Description { get; set; }
     }
 }

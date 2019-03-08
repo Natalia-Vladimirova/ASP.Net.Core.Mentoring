@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 
 namespace NorthwindApp.DAL.Entities
 {
@@ -10,5 +11,7 @@ namespace NorthwindApp.DAL.Entities
         public string CategoryName { get; set; }
 
         public string Description { get; set; }
+
+        public ICollection<ProductDto> Products { get; set; }
     }
 }

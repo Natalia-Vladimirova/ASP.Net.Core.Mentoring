@@ -18,8 +18,8 @@
 
         public bool Discontinued { get; set; }
 
-        public int SupplierId { get; set; }
+        public BaseSupplier Supplier { get; set; }
 
-        public int CategoryId { get; set; }
+        public BaseCategory Category { get; set; }
     }
 }

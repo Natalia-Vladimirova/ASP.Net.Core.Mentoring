@@ -1,10 +1,11 @@
 ﻿using System.Collections.Generic;
+using System.Threading.Tasks;
 using NorthwindApp.Models;
 
 namespace NorthwindApp.Services.Interfaces
 {
     public interface IProductService
     {
-        IEnumerable<Product> GetProducts();
+        Task<IEnumerable<Product>> GetProductsAsync();
     }
 }

@@ -2,6 +2,7 @@
 using System.Linq;
 using System.Threading.Tasks;
 using AutoMapper;
+using Microsoft.EntityFrameworkCore;
 using NorthwindApp.DAL.Entities;
 using NorthwindApp.DAL.Infrastructure;
 using NorthwindApp.DAL.Interfaces;
@@ -20,9 +21,14 @@ namespace NorthwindApp.DAL.Repositories
             _mapper = mapper;
         }
 
-        public IEnumerable<Product> GetProducts()
+        public async Task<IEnumerable<Product>> GetProductsAsync()
         {
-            return _context.Products.Select(_mapper.Map<Product>);
+            var products = await _context.Products
+                .Include(x => x.Category)
+                .Include(x => x.Supplier)
+                .ToListAsync();
+
+            return products.Select(_mapper.Map<Product>);
         }
     }
 }

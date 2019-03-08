@@ -1,11 +1,7 @@
 ﻿namespace NorthwindApp.UI.Models
 {
-    public class CategoryViewModel
+    public class CategoryViewModel : BaseCategoryViewModel
     {
-        public int CategoryId { get; set; }
-
-        public string CategoryName { get; set; }
-
         public string Description { get; set; }
     }
 }

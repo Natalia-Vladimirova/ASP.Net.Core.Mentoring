@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Threading.Tasks;
 using NorthwindApp.DAL.Interfaces;
 using NorthwindApp.Models;
 using NorthwindApp.Services.Interfaces;
@@ -14,9 +15,9 @@ namespace NorthwindApp.Services
             _productRepository = productRepository;
         }
 
-        public IEnumerable<Product> GetProducts()
+        public async Task<IEnumerable<Product>> GetProductsAsync()
         {
-            return _productRepository.GetProducts();
+            return await _productRepository.GetProductsAsync();
         }
     }
 }

@@ -49,7 +49,7 @@
                 <p>@product.QuantityPerUnit</p>
             </div>
             <div class="col-md-1 col-sm-1 col-xs-1">
-                <p>@product.UnitPrice</p>
+                <p>@FormatPrice(product.UnitPrice)</p>
             </div>
             <div class="col-md-1 col-sm-1 col-xs-1">
                 <p>@product.UnitsInStock</p>
@@ -64,11 +64,16 @@
                 <p>@product.Discontinued</p>
             </div>
             <div class="col-md-1 col-sm-1 col-xs-1">
-                <p>@product.SupplierId</p>
+                <p>@product.Supplier.CompanyName</p>
             </div>
             <div class="col-md-1 col-sm-1 col-xs-1">
-                <p>@product.CategoryId</p>
+                <p>@product.Category.CategoryName</p>
             </div>
         </div>
     }
 </div>
+
+@functions
+{
+    string FormatPrice(decimal price) => $"{price:#.##}";
+}

@@ -21,8 +21,8 @@ namespace NorthwindApp.DAL.Entities
 
         public bool Discontinued { get; set; }
 
-        public int SupplierId { get; set; }
+        public CategoryDto Category { get; set; }
 
-        public int CategoryId { get; set; }
+        public SupplierDto Supplier { get; set; }
     }
 }

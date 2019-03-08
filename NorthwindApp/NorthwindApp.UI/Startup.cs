@@ -31,9 +31,11 @@ namespace NorthwindApp.UI
 
             services.AddScoped<IProductRepository, ProductRepository>();
             services.AddScoped<ICategoryRepository, CategoryRepository>();
+            services.AddScoped<ISupplierRepository, SupplierRepository>();
 
             services.AddScoped<IProductService, ProductService>();
             services.AddScoped<ICategoryService, CategoryService>();
+            services.AddScoped<ISupplierService, SupplierService>();
 
             services.AddSingleton<INorthwindConfigurationProvider, NorthwindConfigurationProvider>();
 

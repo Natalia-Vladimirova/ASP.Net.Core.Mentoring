@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using AutoMapper;
@@ -23,25 +24,33 @@ namespace NorthwindApp.DAL.Repositories
 
         public async Task<IEnumerable<Product>> GetProductsAsync()
         {
-            var products = await GetProductQuery().ToListAsync();
+            var products = await GetProducts(x => x);
 
             return products.Select(_mapper.Map<Product>);
         }
 
         public async Task<IEnumerable<Product>> GetProductsAsync(int count)
         {
-            var products = await GetProductQuery()
-                .Take(count)
-                .ToListAsync();
+            var products = await GetProducts(x => x.Take(count));
             
             return products.Select(_mapper.Map<Product>);
         }
 
-        private IQueryable<ProductDto> GetProductQuery()
+        public async Task AddProductAsync(Product product)
         {
-            return _context.Products
+            var productDto = _mapper.Map<ProductDto>(product);
+
+            await _context.Products.AddAsync(productDto);
+            await _context.SaveChangesAsync();
+        }
+
+        private async Task<IEnumerable<ProductDto>> GetProducts(
+            Func<IQueryable<ProductDto>, IQueryable<ProductDto>> filterQuery)
+        {
+            return await filterQuery(_context.Products
                 .Include(x => x.Category)
-                .Include(x => x.Supplier);
+                .Include(x => x.Supplier))
+                .ToListAsync();
         }
     }
 }

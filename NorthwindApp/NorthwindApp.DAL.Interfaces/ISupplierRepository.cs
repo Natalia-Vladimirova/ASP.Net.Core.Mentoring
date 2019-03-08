@@ -4,8 +4,8 @@ using NorthwindApp.Models;
 
 namespace NorthwindApp.DAL.Interfaces
 {
-    public interface ICategoryRepository
+    public interface ISupplierRepository
     {
-        Task<IEnumerable<Category>> GetCategoriesAsync();
+        Task<IEnumerable<Supplier>> GetSuppliersAsync();
     }
 }

@@ -1,4 +1,5 @@
 ﻿using System.Linq;
+using System.Threading.Tasks;
 using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
 using NorthwindApp.Services.Interfaces;
@@ -17,9 +18,9 @@ namespace NorthwindApp.UI.Controllers
             _mapper = mapper;
         }
 
-        public IActionResult Index()
+        public async Task<IActionResult> Index()
         {
-            var categories = _categoryService.GetCategories()
+            var categories = (await _categoryService.GetCategoriesAsync())
                 .Select(_mapper.Map<CategoryViewModel>);
 
             return View(categories);

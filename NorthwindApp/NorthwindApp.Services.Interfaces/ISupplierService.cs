@@ -4,10 +4,8 @@ using NorthwindApp.Models;
 
 namespace NorthwindApp.Services.Interfaces
 {
-    public interface IProductService
+    public interface ISupplierService
     {
-        Task<IEnumerable<Product>> GetProductsAsync(int count);
-
-        Task AddProductAsync(Product product);
+        Task<IEnumerable<Supplier>> GetSuppliersAsync();
     }
 }

@@ -9,22 +9,22 @@ using NorthwindApp.Models;
 
 namespace NorthwindApp.DAL.Repositories
 {
-    public class CategoryRepository : ICategoryRepository
+    public class SupplierRepository : ISupplierRepository
     {
         private readonly NorthwindDbContext _context;
         private readonly IMapper _mapper;
 
-        public CategoryRepository(NorthwindDbContext context, IMapper mapper)
+        public SupplierRepository(NorthwindDbContext context, IMapper mapper)
         {
             _context = context;
             _mapper = mapper;
         }
 
-        public async Task<IEnumerable<Category>> GetCategoriesAsync()
+        public async Task<IEnumerable<Supplier>> GetSuppliersAsync()
         {
-            var categories = await _context.Categories.ToListAsync();
+            var suppliers = await _context.Suppliers.ToListAsync();
 
-            return categories.Select(_mapper.Map<Category>);
+            return suppliers.Select(_mapper.Map<Supplier>);
         }
     }
 }

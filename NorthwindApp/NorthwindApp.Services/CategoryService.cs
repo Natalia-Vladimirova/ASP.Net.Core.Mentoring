@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Threading.Tasks;
 using NorthwindApp.DAL.Interfaces;
 using NorthwindApp.Models;
 using NorthwindApp.Services.Interfaces;
@@ -14,9 +15,9 @@ namespace NorthwindApp.Services
             _categoryRepository = categoryRepository;
         }
 
-        public IEnumerable<Category> GetCategories()
+        public async Task<IEnumerable<Category>> GetCategoriesAsync()
         {
-            return _categoryRepository.GetCategories();
+            return await _categoryRepository.GetCategoriesAsync();
         }
     }
 }

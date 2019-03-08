@@ -23,12 +23,25 @@ namespace NorthwindApp.DAL.Repositories
 
         public async Task<IEnumerable<Product>> GetProductsAsync()
         {
-            var products = await _context.Products
-                .Include(x => x.Category)
-                .Include(x => x.Supplier)
-                .ToListAsync();
+            var products = await GetProductQuery().ToListAsync();
 
             return products.Select(_mapper.Map<Product>);
+        }
+
+        public async Task<IEnumerable<Product>> GetProductsAsync(int count)
+        {
+            var products = await GetProductQuery()
+                .Take(count)
+                .ToListAsync();
+            
+            return products.Select(_mapper.Map<Product>);
+        }
+
+        private IQueryable<ProductDto> GetProductQuery()
+        {
+            return _context.Products
+                .Include(x => x.Category)
+                .Include(x => x.Supplier);
         }
     }
 }

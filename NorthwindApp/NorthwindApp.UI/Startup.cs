@@ -9,6 +9,8 @@ using NorthwindApp.DAL.Interfaces;
 using NorthwindApp.DAL.Repositories;
 using NorthwindApp.Services;
 using NorthwindApp.Services.Interfaces;
+using INorthwindConfigurationProvider = NorthwindApp.Core.Interfaces.IConfigurationProvider;
+using NorthwindConfigurationProvider = NorthwindApp.Core.Providers.ConfigurationProvider;
 
 namespace NorthwindApp.UI
 {
@@ -32,6 +34,8 @@ namespace NorthwindApp.UI
 
             services.AddScoped<IProductService, ProductService>();
             services.AddScoped<ICategoryService, CategoryService>();
+
+            services.AddSingleton<INorthwindConfigurationProvider, NorthwindConfigurationProvider>();
 
             services.AddAutoMapper();
             services.AddMvc();

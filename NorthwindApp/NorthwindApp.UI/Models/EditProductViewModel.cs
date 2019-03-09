@@ -2,7 +2,7 @@
 
 namespace NorthwindApp.UI.Models
 {
-    public class AddProductViewModel
+    public class EditProductViewModel
     {
         public ProductViewModel Product { get; set; }
 

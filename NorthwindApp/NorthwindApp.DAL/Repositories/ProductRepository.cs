@@ -36,11 +36,26 @@ namespace NorthwindApp.DAL.Repositories
             return products.Select(_mapper.Map<Product>);
         }
 
+        public async Task<Product> GetProductAsync(int id)
+        {
+            var product = await GetProducts(x => x.Where(y => y.ProductId == id));
+
+            return _mapper.Map<Product>(product.FirstOrDefault());
+        }
+
         public async Task AddProductAsync(Product product)
         {
             var productDto = _mapper.Map<ProductDto>(product);
 
-            await _context.Products.AddAsync(productDto);
+            _context.Products.Add(productDto);
+            await _context.SaveChangesAsync();
+        }
+
+        public async Task EditProductAsync(Product product)
+        {
+            var productDto = _mapper.Map<ProductDto>(product);
+
+            _context.Products.Update(productDto);
             await _context.SaveChangesAsync();
         }
 

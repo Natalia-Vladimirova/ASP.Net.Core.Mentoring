@@ -25,9 +25,19 @@ namespace NorthwindApp.Services
             return await _productRepository.GetProductsAsync();
         }
 
+        public async Task<Product> GetProductAsync(int id)
+        {
+            return await _productRepository.GetProductAsync(id);
+        }
+
         public async Task AddProductAsync(Product product)
         {
             await _productRepository.AddProductAsync(product);
+        }
+
+        public async Task EditProductAsync(Product product)
+        {
+            await _productRepository.EditProductAsync(product);
         }
     }
 }

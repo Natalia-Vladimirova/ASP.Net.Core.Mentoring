@@ -10,9 +10,6 @@
 
 <div class="row items-list">
     <div class="row list-element">
-        <div class="col-md-1 col-sm-1 col-xs-1">
-            <label>Id</label>
-        </div>
         <div class="col-md-2 col-sm-2 col-xs-2">
             <label>Name</label>
         </div>
@@ -40,13 +37,11 @@
         <div class="col-md-1 col-sm-1 col-xs-1">
             <label>Category</label>
         </div>
+        <div class="col-md-1 col-sm-1 col-xs-1"></div>
     </div>
     @foreach (var product in Model)
     {
         <div class="row list-element">
-            <div class="col-md-1 col-sm-1 col-xs-1">
-                <p>@product.ProductId</p>
-            </div>
             <div class="col-md-2 col-sm-2 col-xs-2">
                 <p class="bold">@product.ProductName</p>
             </div>
@@ -73,6 +68,9 @@
             </div>
             <div class="col-md-1 col-sm-1 col-xs-1">
                 <p>@product.Category.CategoryName</p>
+            </div>
+            <div class="col-md-1 col-sm-1 col-xs-1">
+                <a asp-action="Edit" asp-route-id="@product.ProductId"><p>Edit</p></a>
             </div>
         </div>
     }

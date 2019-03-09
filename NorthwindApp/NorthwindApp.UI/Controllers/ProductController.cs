@@ -44,22 +44,17 @@ namespace NorthwindApp.UI.Controllers
         [HttpGet]
         public async Task<ActionResult> Add()
         {
-            AddProductViewModel model = new AddProductViewModel
-            {
-                Categories = (await _categoryService.GetCategoriesAsync()).Select(_mapper.Map<BaseCategoryViewModel>),
-                Suppliers = (await _supplierService.GetSuppliersAsync()).Select(_mapper.Map<BaseSupplierViewModel>)
-            };
+            var model = await BuildEditModel(null);
 
             return View(model);
         }
 
         [HttpPost]
-        public async Task<ActionResult> Add(AddProductViewModel model)
+        public async Task<ActionResult> Add(EditProductViewModel model)
         {
             if (!ModelState.IsValid)
             {
-                model.Categories = (await _categoryService.GetCategoriesAsync()).Select(_mapper.Map<BaseCategoryViewModel>);
-                model.Suppliers = (await _supplierService.GetSuppliersAsync()).Select(_mapper.Map<BaseSupplierViewModel>);
+                var addModel = await BuildEditModel(model.Product);
 
                 return View(model);
             }
@@ -68,6 +63,47 @@ namespace NorthwindApp.UI.Controllers
             await _productService.AddProductAsync(product);
 
             return RedirectToAction("Index");
+        }
+
+        [HttpGet]
+        public async Task<ActionResult> Edit(int id = 0)
+        {
+            var product = await _productService.GetProductAsync(id);
+
+            if (product == null)
+            {
+                return RedirectToAction("Index");
+            }
+
+            var model = await BuildEditModel(_mapper.Map<ProductViewModel>(product));
+
+            return View(model);
+        }
+
+        [HttpPost]
+        public async Task<ActionResult> Edit(EditProductViewModel model)
+        {
+            if (!ModelState.IsValid)
+            {
+                var editModel = await BuildEditModel(model.Product);
+
+                return View(model);
+            }
+
+            var product = _mapper.Map<Product>(model.Product);
+            await _productService.EditProductAsync(product);
+
+            return RedirectToAction("Index");
+        }
+
+        private async Task<EditProductViewModel> BuildEditModel(ProductViewModel model)
+        {
+            return new EditProductViewModel
+            {
+                Product = model,
+                Categories = (await _categoryService.GetCategoriesAsync()).Select(_mapper.Map<BaseCategoryViewModel>),
+                Suppliers = (await _supplierService.GetSuppliersAsync()).Select(_mapper.Map<BaseSupplierViewModel>)
+            };
         }
     }
 }

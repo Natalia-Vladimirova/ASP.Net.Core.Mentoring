@@ -10,6 +10,10 @@ namespace NorthwindApp.DAL.Interfaces
 
         Task<IEnumerable<Product>> GetProductsAsync(int count);
 
+        Task<Product> GetProductAsync(int id);
+
         Task AddProductAsync(Product product);
+
+        Task EditProductAsync(Product product);
     }
 }

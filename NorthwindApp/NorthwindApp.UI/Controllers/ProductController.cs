@@ -56,7 +56,7 @@ namespace NorthwindApp.UI.Controllers
             {
                 var addModel = await BuildEditModel(model.Product);
 
-                return View(model);
+                return View(addModel);
             }
 
             var product = _mapper.Map<Product>(model.Product);
@@ -87,7 +87,7 @@ namespace NorthwindApp.UI.Controllers
             {
                 var editModel = await BuildEditModel(model.Product);
 
-                return View(model);
+                return View(editModel);
             }
 
             var product = _mapper.Map<Product>(model.Product);

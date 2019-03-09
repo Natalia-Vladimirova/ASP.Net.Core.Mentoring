@@ -15,6 +15,7 @@ namespace NorthwindApp.UI.Models
         public string QuantityPerUnit { get; set; }
 
         [Display(Name = "Unit Price")]
+        [Range(0, 10000, ErrorMessage = "Unit price is out of range")]
         public decimal UnitPrice { get; set; }
 
         [Display(Name = "Units In Stock")]

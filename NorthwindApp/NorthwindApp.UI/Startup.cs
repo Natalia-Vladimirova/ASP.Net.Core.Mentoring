@@ -1,4 +1,5 @@
-﻿using AutoMapper;
+﻿using System.Collections.Generic;
+using AutoMapper;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.EntityFrameworkCore;
@@ -9,8 +10,9 @@ using NorthwindApp.DAL.Interfaces;
 using NorthwindApp.DAL.Repositories;
 using NorthwindApp.Services;
 using NorthwindApp.Services.Interfaces;
-using INorthwindConfigurationProvider = NorthwindApp.Core.Interfaces.IConfigurationProvider;
-using NorthwindConfigurationProvider = NorthwindApp.Core.Providers.ConfigurationProvider;
+using NorthwindApp.UI.Interfaces;
+using NorthwindApp.UI.Services;
+using IConfigurationProvider = NorthwindApp.Core.Interfaces.IConfigurationProvider;
 
 namespace NorthwindApp.UI
 {
@@ -37,14 +39,15 @@ namespace NorthwindApp.UI
             services.AddScoped<ICategoryService, CategoryService>();
             services.AddScoped<ISupplierService, SupplierService>();
 
-            services.AddSingleton<INorthwindConfigurationProvider, NorthwindConfigurationProvider>();
+            services.AddSingleton<IConfigurationProvider, LoggingConfigurationProvider>();
+            services.AddSingleton<ILogger, AppInsightsLogger>();
 
             services.AddAutoMapper();
             services.AddMvc();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IHostingEnvironment env)
+        public void Configure(IApplicationBuilder app, IHostingEnvironment env, ILogger logger)
         {
             if (env.IsDevelopment())
             {
@@ -64,6 +67,12 @@ namespace NorthwindApp.UI
                     name: "default",
                     template: "{controller=Home}/{action=Index}/{id?}");
             });
+
+            var properties = new Dictionary<string, string>
+            {
+                { "ApplicationLocation", env.ContentRootPath }
+            };
+            logger.LogInfo("Application start", properties);
         }
     }
 }

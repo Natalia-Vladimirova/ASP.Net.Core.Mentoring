@@ -13,7 +13,7 @@ namespace NorthwindApp.Core.Providers
             _configuration = configuration;
         }
 
-        public int ProductPageSize => int.TryParse(_configuration[ProductPageSizeKey], out var result)
+        public virtual int ProductPageSize => int.TryParse(_configuration[ProductPageSizeKey], out var result)
             ? result
             : 0;
     }

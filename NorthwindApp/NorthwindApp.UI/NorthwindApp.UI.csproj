@@ -6,6 +6,7 @@
 
   <ItemGroup>
     <PackageReference Include="AutoMapper.Extensions.Microsoft.DependencyInjection" Version="6.0.0" />
+    <PackageReference Include="Microsoft.ApplicationInsights.AspNetCore" Version="2.1.1" />
     <PackageReference Include="Microsoft.AspNetCore.All" Version="2.0.8" />
     <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="2.0.3" />
   </ItemGroup>
@@ -21,6 +22,10 @@
     <ProjectReference Include="..\NorthwindApp.Models\NorthwindApp.Models.csproj" />
     <ProjectReference Include="..\NorthwindApp.Services.Interfaces\NorthwindApp.Services.Interfaces.csproj" />
     <ProjectReference Include="..\NorthwindApp.Services\NorthwindApp.Services.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <WCFMetadata Include="Connected Services" />
   </ItemGroup>
 
 </Project>

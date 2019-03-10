@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using Microsoft.ApplicationInsights;
 using Microsoft.ApplicationInsights.DataContracts;
 using NorthwindApp.UI.Interfaces;
@@ -17,6 +18,16 @@ namespace NorthwindApp.UI.Services
         public void LogInfo(string info, IDictionary<string, string> properties)
         {
             _client.TrackTrace(info, SeverityLevel.Information, properties);
+        }
+
+        public void LogError(Exception exception, IDictionary<string, string> properties)
+        {
+            _client.TrackException(exception, properties);
+        }
+
+        public void LogError(string message, IDictionary<string, string> properties)
+        {
+            _client.TrackTrace(message, SeverityLevel.Error, properties);
         }
     }
 }

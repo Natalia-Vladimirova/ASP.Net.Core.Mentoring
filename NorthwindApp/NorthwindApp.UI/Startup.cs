@@ -56,9 +56,10 @@ namespace NorthwindApp.UI
             }
             else
             {
-                app.UseExceptionHandler("/Error");
+                app.UseExceptionHandler("/Error/500");
             }
 
+            app.UseStatusCodePagesWithReExecute("/Error/{0}");
             app.UseStaticFiles();
 
             app.UseMvc(routes =>

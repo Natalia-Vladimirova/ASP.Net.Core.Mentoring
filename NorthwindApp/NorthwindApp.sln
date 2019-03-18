@@ -15,7 +15,11 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NorthwindApp.DAL.Interfaces
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NorthwindApp.Services.Interfaces", "NorthwindApp.Services.Interfaces\NorthwindApp.Services.Interfaces.csproj", "{354E733D-5AC1-4F31-B4C5-502450ABF1A2}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NorthwindApp.Core", "NorthwindApp.Core\NorthwindApp.Core.csproj", "{CCFB6406-5A4D-4385-B2C1-314F0C5249A7}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NorthwindApp.Core", "NorthwindApp.Core\NorthwindApp.Core.csproj", "{CCFB6406-5A4D-4385-B2C1-314F0C5249A7}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tests", "Tests", "{3EDCEC11-7F44-46C2-B7DF-77CD83D7BA0D}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NorthwindApp.UI.Tests", "Tests\NorthwindApp.UI.Tests\NorthwindApp.UI.Tests.csproj", "{C5E6BA39-E13C-4C72-B187-DA3C36905243}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -51,9 +55,16 @@ Global
 		{CCFB6406-5A4D-4385-B2C1-314F0C5249A7}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{CCFB6406-5A4D-4385-B2C1-314F0C5249A7}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{CCFB6406-5A4D-4385-B2C1-314F0C5249A7}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C5E6BA39-E13C-4C72-B187-DA3C36905243}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C5E6BA39-E13C-4C72-B187-DA3C36905243}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C5E6BA39-E13C-4C72-B187-DA3C36905243}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C5E6BA39-E13C-4C72-B187-DA3C36905243}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{C5E6BA39-E13C-4C72-B187-DA3C36905243} = {3EDCEC11-7F44-46C2-B7DF-77CD83D7BA0D}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {5D1ABC38-4FDC-4614-AC55-0A7A8F6945B5}

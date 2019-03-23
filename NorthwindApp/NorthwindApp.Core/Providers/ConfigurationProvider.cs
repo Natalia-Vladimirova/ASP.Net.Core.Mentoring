@@ -5,6 +5,7 @@ namespace NorthwindApp.Core.Providers
     public class ConfigurationProvider : Interfaces.IConfigurationProvider
     {
         private const string ProductPageSizeKey = "MaxProductsCount";
+        private const string CategoryImageGarbageSizeKey = "CategoryImageGarbageSize";
 
         private readonly IConfiguration _configuration;
 
@@ -13,7 +14,11 @@ namespace NorthwindApp.Core.Providers
             _configuration = configuration;
         }
 
-        public virtual int ProductPageSize => int.TryParse(_configuration[ProductPageSizeKey], out var result)
+        public virtual int ProductPageSize => GetInt(ProductPageSizeKey);
+
+        public int CategoryImageGarbageSize => GetInt(CategoryImageGarbageSizeKey);
+
+        private int GetInt(string key) => int.TryParse(_configuration[key], out var result)
             ? result
             : 0;
     }

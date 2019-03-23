@@ -3,5 +3,7 @@
     public interface IConfigurationProvider
     {
         int ProductPageSize { get; }
+
+        int CategoryImageGarbageSize { get; }
     }
 }

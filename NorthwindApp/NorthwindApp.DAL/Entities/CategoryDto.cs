@@ -12,6 +12,8 @@ namespace NorthwindApp.DAL.Entities
 
         public string Description { get; set; }
 
+        public CategoryImageDetailsDto Details { get; set; }
+
         public ICollection<ProductDto> Products { get; set; }
     }
 }

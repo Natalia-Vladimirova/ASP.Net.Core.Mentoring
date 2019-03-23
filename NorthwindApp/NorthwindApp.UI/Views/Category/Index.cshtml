@@ -5,27 +5,31 @@
 
 <div class="row items-list">
     <div class="row list-element">
-        <div class="col-md-2 col-sm-2 col-xs-2">
+        <div class="col-md-1 col-sm-1 col-xs-1">
             <label>Id</label>
         </div>
-        <div class="col-md-3 col-sm-4 col-xs-4">
+        <div class="col-md-3 col-sm-3 col-xs-3">
             <label>Name</label>
         </div>
-        <div class="col-md-7 col-sm-6 col-xs-6">
+        <div class="col-md-4 col-sm-4 col-xs-4">
             <label>Description</label>
         </div>
     </div>
     @foreach (var category in Model)
     {
         <div class="row list-element">
-            <div class="col-md-2 col-sm-2 col-xs-2">
+            <div class="col-md-1 col-sm-1 col-xs-1">
                 <p>@category.CategoryId</p>
             </div>
-            <div class="col-md-3 col-sm-4 col-xs-4">
+            <div class="col-md-3 col-sm-3 col-xs-3">
                 <p class="bold">@category.CategoryName</p>
             </div>
-            <div class="col-md-7 col-sm-6 col-xs-6">
+            <div class="col-md-4 col-sm-4 col-xs-4">
                 <p>@category.Description</p>
+            </div>
+            <div class="col-md-4 col-sm-4 col-xs-4">
+                <img src="@Url.Action("Image", "Category", new { id = category.CategoryId })" 
+                     alt="@category.CategoryName" width="100" />
             </div>
         </div>
     }

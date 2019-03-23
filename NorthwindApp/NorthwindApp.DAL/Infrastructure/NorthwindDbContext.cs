@@ -9,10 +9,27 @@ namespace NorthwindApp.DAL.Infrastructure
             : base(options)
         { }
 
-        public DbSet<ProductDto> Products { get; set; }
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+            base.OnModelCreating(modelBuilder);
 
-        public DbSet<CategoryDto> Categories { get; set; }
+            modelBuilder.Entity<ProductDto>()
+                .ToTable("Products");
 
-        public DbSet<SupplierDto> Suppliers { get; set; }
+            modelBuilder.Entity<SupplierDto>()
+                .ToTable("Suppliers");
+
+            modelBuilder.Entity<CategoryDto>()
+                .ToTable("Categories")
+                .HasOne(x => x.Details)
+                .WithOne(x => x.Category)
+                .HasForeignKey<CategoryImageDetailsDto>(x => x.CategoryId);
+
+            modelBuilder.Entity<CategoryImageDetailsDto>()
+                .ToTable("Categories")
+                .HasOne(x => x.Category)
+                .WithOne(x => x.Details)
+                .HasForeignKey<CategoryDto>(x => x.CategoryId);
+        }
     }
 }

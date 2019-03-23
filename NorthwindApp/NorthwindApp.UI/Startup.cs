@@ -30,6 +30,7 @@ namespace NorthwindApp.UI
         {
             services.AddDbContext<NorthwindDbContext>(
                 options => options.UseSqlServer(_configuration.GetConnectionString("NorthwindConnection")));
+            services.AddScoped<DbContext>(x => x.GetService<NorthwindDbContext>());
 
             services.AddScoped<IProductRepository, ProductRepository>();
             services.AddScoped<ICategoryRepository, CategoryRepository>();

@@ -5,7 +5,6 @@ using System.Threading.Tasks;
 using AutoMapper;
 using Microsoft.EntityFrameworkCore;
 using NorthwindApp.DAL.Entities;
-using NorthwindApp.DAL.Infrastructure;
 using NorthwindApp.DAL.Interfaces;
 using NorthwindApp.Models;
 
@@ -13,10 +12,10 @@ namespace NorthwindApp.DAL.Repositories
 {
     public class ProductRepository : IProductRepository
     {
-        private readonly NorthwindDbContext _context;
+        private readonly DbContext _context;
         private readonly IMapper _mapper;
 
-        public ProductRepository(NorthwindDbContext context, IMapper mapper)
+        public ProductRepository(DbContext context, IMapper mapper)
         {
             _context = context;
             _mapper = mapper;
@@ -47,7 +46,7 @@ namespace NorthwindApp.DAL.Repositories
         {
             var productDto = _mapper.Map<ProductDto>(product);
 
-            _context.Products.Add(productDto);
+            _context.Set<ProductDto>().Add(productDto);
             await _context.SaveChangesAsync();
         }
 
@@ -55,14 +54,14 @@ namespace NorthwindApp.DAL.Repositories
         {
             var productDto = _mapper.Map<ProductDto>(product);
 
-            _context.Products.Update(productDto);
+            _context.Set<ProductDto>().Update(productDto);
             await _context.SaveChangesAsync();
         }
 
         private async Task<IEnumerable<ProductDto>> GetProducts(
             Func<IQueryable<ProductDto>, IQueryable<ProductDto>> filterQuery)
         {
-            return await filterQuery(_context.Products
+            return await filterQuery(_context.Set<ProductDto>()
                 .Include(x => x.Category)
                 .Include(x => x.Supplier))
                 .ToListAsync();

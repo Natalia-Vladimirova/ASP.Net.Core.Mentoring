@@ -7,5 +7,7 @@ namespace NorthwindApp.Services.Interfaces
     public interface ICategoryService
     {
         Task<IEnumerable<Category>> GetCategoriesAsync();
+
+        Task<byte[]> GetCategoryImageAsync(int id);
     }
 }

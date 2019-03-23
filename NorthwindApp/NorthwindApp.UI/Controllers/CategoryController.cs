@@ -25,5 +25,17 @@ namespace NorthwindApp.UI.Controllers
 
             return View(categories);
         }
+
+        public async Task<IActionResult> Image(int id)
+        {
+            var image = await _categoryService.GetCategoryImageAsync(id);
+            
+            if (image == null)
+            {
+                return NotFound();
+            }
+
+            return File(image, "image/bmp");
+        }
     }
 }

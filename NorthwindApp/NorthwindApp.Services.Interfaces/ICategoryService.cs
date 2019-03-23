@@ -9,5 +9,7 @@ namespace NorthwindApp.Services.Interfaces
         Task<IEnumerable<Category>> GetCategoriesAsync();
 
         Task<byte[]> GetCategoryImageAsync(int id);
+
+        Task UploadCategoryImageAsync(int id, byte[] image);
     }
 }

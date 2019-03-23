@@ -1,0 +1,28 @@
+﻿@model NorthwindApp.UI.Models.CategoryImageDetailsViewModel
+
+@{
+    ViewBag.Title = "Upload image";
+}
+
+<div class="row">
+    <div class="col-md-12">
+        <h2>Upload new image for category</h2>
+        <a asp-action="Index">Back to List</a>
+    </div>
+</div>
+<hr />
+<div class="row">
+    <div class="col-md-6">
+        <form method="post" enctype="multipart/form-data" asp-action="UploadImage">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <input asp-for="CategoryId" hidden />
+            <div class="form-group">
+                <input asp-for="Picture" type="file" />
+                <span asp-validation-for="Picture" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Upload" class="btn btn-default" />
+            </div>
+        </form>
+    </div>
+</div>

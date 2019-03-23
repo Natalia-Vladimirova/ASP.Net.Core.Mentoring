@@ -1,4 +1,5 @@
-﻿using System.Linq;
+﻿using System.IO;
+using System.Linq;
 using System.Threading.Tasks;
 using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
@@ -35,7 +36,30 @@ namespace NorthwindApp.UI.Controllers
                 return NotFound();
             }
 
-            return File(image, "image/bmp");
+            return File(image, "image/*");
+        }
+
+        [HttpGet]
+        public ActionResult UploadImage(int categoryId)
+        {
+            return View(new CategoryImageDetailsViewModel { CategoryId = categoryId });
+        }
+
+        [HttpPost]
+        public async Task<ActionResult> UploadImage(CategoryImageDetailsViewModel model)
+        {
+            if (!ModelState.IsValid)
+            {
+                return View(model);
+            }
+
+            using (var memoryStream = new MemoryStream())
+            {
+                await model.Picture.CopyToAsync(memoryStream);
+                await _categoryService.UploadCategoryImageAsync(model.CategoryId, memoryStream.ToArray());
+            }
+
+            return RedirectToAction("Index");
         }
     }
 }

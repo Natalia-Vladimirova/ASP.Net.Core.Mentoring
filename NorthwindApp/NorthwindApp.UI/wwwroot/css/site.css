@@ -18,6 +18,9 @@
         .items-list .list-element:first-child p {
             font-weight: bold;
         }
+        .items-list .list-element img {
+            max-width: 100%;
+        }
         .items-list .list-element p {
             margin: 10px 0;
         }

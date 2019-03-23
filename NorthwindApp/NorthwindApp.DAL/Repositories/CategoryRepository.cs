@@ -34,5 +34,20 @@ namespace NorthwindApp.DAL.Repositories
 
             return categoryDetails?.Picture;
         }
+
+        public async Task UploadCategoryImageAsync(int id, byte[] image)
+        {
+            var categoryDetails = await _context.Set<CategoryImageDetailsDto>()
+                .FirstOrDefaultAsync(x => x.CategoryId == id);
+
+            if (categoryDetails == null)
+            {
+                return;
+            }
+
+            categoryDetails.Picture = image;
+            _context.Set<CategoryImageDetailsDto>().Update(categoryDetails);
+            await _context.SaveChangesAsync();
+        }
     }
 }

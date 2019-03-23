@@ -66,6 +66,11 @@ namespace NorthwindApp.UI
             app.UseMvc(routes =>
             {
                 routes.MapRoute(
+                    name: "images",
+                    template: "images/{id:int}",
+                    defaults: new { controller = "Category", action = "Image" });
+
+                routes.MapRoute(
                     name: "default",
                     template: "{controller=Home}/{action=Index}/{id?}");
             });

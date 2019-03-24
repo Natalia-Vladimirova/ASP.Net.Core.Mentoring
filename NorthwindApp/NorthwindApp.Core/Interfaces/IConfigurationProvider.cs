@@ -5,5 +5,7 @@
         int ProductPageSize { get; }
 
         int CategoryImageGarbageSize { get; }
+
+        string ImageCacheFolderPath { get; }
     }
 }

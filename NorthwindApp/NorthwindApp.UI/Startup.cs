@@ -13,6 +13,7 @@ using NorthwindApp.DAL.Interfaces;
 using NorthwindApp.DAL.Repositories;
 using NorthwindApp.Services;
 using NorthwindApp.Services.Interfaces;
+using NorthwindApp.UI.Infrastructure;
 using NorthwindApp.UI.Interfaces;
 using NorthwindApp.UI.Services;
 using IConfigurationProvider = NorthwindApp.Core.Interfaces.IConfigurationProvider;
@@ -47,6 +48,10 @@ namespace NorthwindApp.UI
             services.AddSingleton<ILogger, AppInsightsLogger>();
 
             services.AddSingleton<IMimeHelper, MimeHelper>();
+            services.AddSingleton<ICacheService, DirectoryCacheService>(
+                x => new DirectoryCacheService(
+                    x.GetService<IConfigurationProvider>(),
+                    x.GetService<IHostingEnvironment>().ContentRootPath));
 
             services.AddAutoMapper();
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
@@ -67,6 +72,7 @@ namespace NorthwindApp.UI
 
             app.UseStatusCodePagesWithReExecute("/Error/{0}");
             app.UseStaticFiles();
+            app.UseImagesCache();
 
             app.UseMvc(routes =>
             {

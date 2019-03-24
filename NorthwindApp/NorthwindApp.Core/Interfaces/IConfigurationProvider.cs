@@ -7,5 +7,7 @@
         int CategoryImageGarbageSize { get; }
 
         string ImageCacheFolderPath { get; }
+
+        int MaxCachedImagesCount { get; }
     }
 }

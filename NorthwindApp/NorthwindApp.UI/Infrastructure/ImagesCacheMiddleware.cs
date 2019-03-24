@@ -75,7 +75,8 @@ namespace NorthwindApp.UI.Infrastructure
             }
 
             if (!string.IsNullOrWhiteSpace(context.Response.ContentType) &&
-                context.Response.ContentType.StartsWith("image"))
+                context.Response.ContentType.StartsWith("image") &&
+                _cacheService.CanBeCached())
             {
                 await _cacheService.AddFileAsync(fileName, responseContent);
             }

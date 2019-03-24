@@ -7,6 +7,7 @@ namespace NorthwindApp.Core.Providers
         private const string ProductPageSizeKey = "MaxProductsCount";
         private const string CategoryImageGarbageSizeKey = "CategoryImageGarbageSize";
         private const string ImageCacheFolderPathKey = "ImageCacheFolderPath";
+        private const string MaxCachedImagesCountKey = "MaxCachedImagesCount";
 
         private readonly IConfiguration _configuration;
 
@@ -20,6 +21,8 @@ namespace NorthwindApp.Core.Providers
         public int CategoryImageGarbageSize => GetInt(CategoryImageGarbageSizeKey);
 
         public string ImageCacheFolderPath => _configuration[ImageCacheFolderPathKey];
+
+        public int MaxCachedImagesCount => GetInt(MaxCachedImagesCountKey);
 
         private int GetInt(string key) => int.TryParse(_configuration[key], out var result)
             ? result

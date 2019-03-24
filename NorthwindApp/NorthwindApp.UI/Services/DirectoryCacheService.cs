@@ -36,6 +36,11 @@ namespace NorthwindApp.UI.Services
                 .FirstOrDefault(x => string.Equals(Path.GetFileName(x), fileName, StringComparison.OrdinalIgnoreCase)) != null;
         }
 
+        public bool CanBeCached()
+        {
+            return Directory.GetFiles(GetCacheFolderPath()).Length < _configurationProvider.MaxCachedImagesCount;
+        }
+
         public async Task<byte[]> GetFileAsync(string fileName)
         {
             var filePath = Path.Combine(GetCacheFolderPath(), fileName);

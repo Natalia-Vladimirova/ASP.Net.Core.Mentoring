@@ -6,6 +6,8 @@ namespace NorthwindApp.UI.Interfaces
     {
         bool IsCached(string fileName);
 
+        bool CanBeCached();
+
         Task<byte[]> GetFileAsync(string fileName);
 
         Task AddFileAsync(string fileName, byte[] content);

@@ -6,7 +6,7 @@ using Microsoft.AspNetCore.Http;
 using NorthwindApp.Core.Interfaces;
 using NorthwindApp.UI.Interfaces;
 
-namespace NorthwindApp.UI.Infrastructure
+namespace NorthwindApp.UI.Infrastructure.Middleware
 {
     public class ImagesCacheMiddleware
     {

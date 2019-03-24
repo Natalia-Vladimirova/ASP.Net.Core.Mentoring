@@ -15,6 +15,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\..\NorthwindApp.Core\NorthwindApp.Core.csproj" />
     <ProjectReference Include="..\..\NorthwindApp.UI\NorthwindApp.UI.csproj" />
   </ItemGroup>
 

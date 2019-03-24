@@ -13,7 +13,7 @@ using NorthwindApp.DAL.Interfaces;
 using NorthwindApp.DAL.Repositories;
 using NorthwindApp.Services;
 using NorthwindApp.Services.Interfaces;
-using NorthwindApp.UI.Infrastructure;
+using NorthwindApp.UI.Infrastructure.Middleware;
 using NorthwindApp.UI.Interfaces;
 using NorthwindApp.UI.Services;
 using IConfigurationProvider = NorthwindApp.Core.Interfaces.IConfigurationProvider;

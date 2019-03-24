@@ -4,6 +4,7 @@ using System.Threading.Tasks;
 using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
 using Moq;
+using NorthwindApp.Core.Interfaces;
 using NorthwindApp.Models;
 using NorthwindApp.Services.Interfaces;
 using NorthwindApp.UI.Controllers;
@@ -36,7 +37,10 @@ namespace NorthwindApp.UI.Tests.Controllers
                     CategoryName = category.CategoryName
                 });
 
-            _categoryController = new CategoryController(_categoryServiceMock.Object, _mapperMock.Object);
+            _categoryController = new CategoryController(
+                _categoryServiceMock.Object,
+                _mapperMock.Object,
+                new Mock<IMimeHelper>().Object);
         }
 
         [Fact]

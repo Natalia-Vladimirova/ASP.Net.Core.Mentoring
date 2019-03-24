@@ -13,6 +13,7 @@ using NorthwindApp.DAL.Interfaces;
 using NorthwindApp.DAL.Repositories;
 using NorthwindApp.Services;
 using NorthwindApp.Services.Interfaces;
+using NorthwindApp.UI.Infrastructure.Filters;
 using NorthwindApp.UI.Infrastructure.Middleware;
 using NorthwindApp.UI.Interfaces;
 using NorthwindApp.UI.Services;
@@ -54,7 +55,9 @@ namespace NorthwindApp.UI
                     x.GetService<IHostingEnvironment>().ContentRootPath));
 
             services.AddAutoMapper();
-            services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
+
+            services.AddMvc(options => options.Filters.Add<LoggingFilter>())
+                .SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

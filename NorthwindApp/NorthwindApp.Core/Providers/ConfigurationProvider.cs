@@ -8,6 +8,7 @@ namespace NorthwindApp.Core.Providers
         private const string CategoryImageGarbageSizeKey = "CategoryImageGarbageSize";
         private const string ImageCacheFolderPathKey = "ImageCacheFolderPath";
         private const string MaxCachedImagesCountKey = "MaxCachedImagesCount";
+        private const string LogActionMethodCallsKey = "LogActionMethodCalls";
 
         private readonly IConfiguration _configuration;
 
@@ -24,8 +25,14 @@ namespace NorthwindApp.Core.Providers
 
         public int MaxCachedImagesCount => GetInt(MaxCachedImagesCountKey);
 
+        public bool LogActionMethodCalls => GetBool(LogActionMethodCallsKey);
+
         private int GetInt(string key) => int.TryParse(_configuration[key], out var result)
             ? result
             : 0;
+
+        private bool GetBool(string key) => bool.TryParse(_configuration[key], out var result)
+            ? result
+            : false;
     }
 }

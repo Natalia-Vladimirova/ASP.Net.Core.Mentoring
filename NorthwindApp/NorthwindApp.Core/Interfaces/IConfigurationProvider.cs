@@ -9,5 +9,7 @@
         string ImageCacheFolderPath { get; }
 
         int MaxCachedImagesCount { get; }
+
+        bool LogActionMethodCalls { get; }
     }
 }

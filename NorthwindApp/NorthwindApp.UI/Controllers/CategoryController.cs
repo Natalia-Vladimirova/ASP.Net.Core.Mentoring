@@ -3,6 +3,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
+using NorthwindApp.Core.Interfaces;
 using NorthwindApp.Services.Interfaces;
 using NorthwindApp.UI.Models;
 
@@ -12,11 +13,16 @@ namespace NorthwindApp.UI.Controllers
     {
         private readonly ICategoryService _categoryService;
         private readonly IMapper _mapper;
+        private readonly IMimeHelper _mimeHelper;
 
-        public CategoryController(ICategoryService categoryService, IMapper mapper)
+        public CategoryController(
+            ICategoryService categoryService, 
+            IMapper mapper, 
+            IMimeHelper mimeHelper)
         {
             _categoryService = categoryService;
             _mapper = mapper;
+            _mimeHelper = mimeHelper;
         }
 
         public async Task<IActionResult> Index()
@@ -36,7 +42,7 @@ namespace NorthwindApp.UI.Controllers
                 return NotFound();
             }
 
-            return File(image, "image/*");
+            return File(image, _mimeHelper.GetMimeType(image));
         }
 
         [HttpGet]

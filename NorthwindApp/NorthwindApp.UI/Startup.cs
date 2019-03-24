@@ -6,6 +6,8 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using NorthwindApp.Core.Interfaces;
+using NorthwindApp.Core.Services;
 using NorthwindApp.DAL.Infrastructure;
 using NorthwindApp.DAL.Interfaces;
 using NorthwindApp.DAL.Repositories;
@@ -43,6 +45,8 @@ namespace NorthwindApp.UI
 
             services.AddSingleton<IConfigurationProvider, LoggingConfigurationProvider>();
             services.AddSingleton<ILogger, AppInsightsLogger>();
+
+            services.AddSingleton<IMimeHelper, MimeHelper>();
 
             services.AddAutoMapper();
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);

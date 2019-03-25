@@ -1,7 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc.Filters;
 using NorthwindApp.Core.Interfaces;
 using NorthwindApp.UI.Interfaces;
-using System.Collections.Generic;
 
 namespace NorthwindApp.UI.Infrastructure.Filters
 {

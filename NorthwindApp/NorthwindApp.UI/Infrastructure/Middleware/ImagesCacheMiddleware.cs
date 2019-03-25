@@ -39,10 +39,10 @@ namespace NorthwindApp.UI.Infrastructure.Middleware
             }
 
             var fileName = Path.GetFileName(context.Request.Path.Value);
+            var content = await _cacheService.GetAsync(fileName);
 
-            if (_cacheService.IsCached(fileName))
+            if (content != null)
             {
-                var content = await _cacheService.GetFileAsync(fileName);
                 var contentType = _mimeHelper.GetMimeType(content);
 
                 context.Response.ContentType = contentType;
@@ -75,10 +75,9 @@ namespace NorthwindApp.UI.Infrastructure.Middleware
             }
 
             if (!string.IsNullOrWhiteSpace(context.Response.ContentType) &&
-                context.Response.ContentType.StartsWith("image") &&
-                _cacheService.CanBeCached())
+                context.Response.ContentType.StartsWith("image"))
             {
-                await _cacheService.AddFileAsync(fileName, responseContent);
+                await _cacheService.AddAsync(fileName, responseContent);
             }
         }
     }

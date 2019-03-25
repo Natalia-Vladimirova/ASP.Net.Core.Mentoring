@@ -1,4 +1,6 @@
-﻿namespace NorthwindApp.Core.Interfaces
+﻿using System;
+
+namespace NorthwindApp.Core.Interfaces
 {
     public interface IConfigurationProvider
     {
@@ -9,6 +11,8 @@
         string ImageCacheFolderPath { get; }
 
         int MaxCachedImagesCount { get; }
+
+        TimeSpan CacheExpirationTime { get; }
 
         bool LogActionMethodCalls { get; }
     }

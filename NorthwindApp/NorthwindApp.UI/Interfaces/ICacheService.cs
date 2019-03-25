@@ -4,14 +4,8 @@ namespace NorthwindApp.UI.Interfaces
 {
     public interface ICacheService
     {
-        bool IsCached(string fileName);
+        Task<byte[]> GetAsync(string key);
 
-        bool CanBeCached();
-
-        Task<byte[]> GetFileAsync(string fileName);
-
-        Task AddFileAsync(string fileName, byte[] content);
-
-        void RemoveFile(string fileName);
+        Task AddAsync(string key, byte[] content);
     }
 }

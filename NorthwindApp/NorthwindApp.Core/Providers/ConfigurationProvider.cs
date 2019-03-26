@@ -5,7 +5,7 @@ namespace NorthwindApp.Core.Providers
 {
     public class ConfigurationProvider : Interfaces.IConfigurationProvider
     {
-        private const string ProductPageSizeKey = "MaxProductsCount";
+        private const string DefaultProductPageSizeKey = "DefaultProductPageSize";
         private const string CategoryImageGarbageSizeKey = "CategoryImageGarbageSize";
         private const string ImageCacheFolderPathKey = "ImageCacheFolderPath";
         private const string MaxCachedImagesCountKey = "MaxCachedImagesCount";
@@ -19,7 +19,7 @@ namespace NorthwindApp.Core.Providers
             _configuration = configuration;
         }
 
-        public virtual int ProductPageSize => GetInt(ProductPageSizeKey);
+        public int DefaultProductPageSize => GetInt(DefaultProductPageSizeKey);
 
         public int CategoryImageGarbageSize => GetInt(CategoryImageGarbageSizeKey);
 

@@ -15,14 +15,21 @@ namespace NorthwindApp.Services
             _productRepository = productRepository;
         }
 
-        public async Task<IEnumerable<Product>> GetProductsAsync(int count)
+        public async Task<IEnumerable<Product>> GetProductsAsync(int page, int pageSize)
         {
-            if (count > 0)
+            if (pageSize > 0)
             {
-                return await _productRepository.GetProductsAsync(count);
+                var skip = (page - 1) * pageSize;
+
+                return await _productRepository.GetProductsAsync(pageSize, skip);
             }
 
             return await _productRepository.GetProductsAsync();
+        }
+
+        public async Task<int> GetProductsCountAsync()
+        {
+            return await _productRepository.GetProductsCountAsync();
         }
 
         public async Task<Product> GetProductAsync(int id)

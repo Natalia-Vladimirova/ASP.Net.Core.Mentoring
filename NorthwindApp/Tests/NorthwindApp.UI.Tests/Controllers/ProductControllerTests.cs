@@ -31,7 +31,7 @@ namespace NorthwindApp.UI.Tests.Controllers
         public ProductControllerTests()
         {
             _productServiceMock = new Mock<IProductService>();
-            _productServiceMock.Setup(x => x.GetProductsAsync(It.IsAny<int>()))
+            _productServiceMock.Setup(x => x.GetProductsAsync(It.IsAny<int>(), It.IsAny<int>()))
                 .ReturnsAsync(new[] { new Product { ProductId = ProductId, ProductName = ProductName } });
             _productServiceMock.Setup(x => x.GetProductAsync(NotFoundProductId))
                 .ReturnsAsync((Product)null);
@@ -56,7 +56,7 @@ namespace NorthwindApp.UI.Tests.Controllers
                 });
 
             _configurationProviderMock = new Mock<IConfigurationProvider>();
-            _configurationProviderMock.Setup(x => x.ProductPageSize)
+            _configurationProviderMock.Setup(x => x.DefaultProductPageSize)
                 .Returns(ProductsCount);
 
             _productController = new ProductController(
@@ -70,7 +70,8 @@ namespace NorthwindApp.UI.Tests.Controllers
         [Fact]
         public async Task Test_Index_ShouldReturnProducts()
         {
-            var result = (await _productController.Index()) as ViewResult;
+            var page = 2;
+            var result = await _productController.Index(page) as ViewResult;
             var model = result?.Model as IEnumerable<ProductViewModel>;
 
             Assert.NotNull(model);
@@ -80,8 +81,8 @@ namespace NorthwindApp.UI.Tests.Controllers
             Assert.Equal(ProductId, products[0].ProductId);
             Assert.Equal(ProductName, products[0].ProductName);
 
-            _configurationProviderMock.Verify(x => x.ProductPageSize, Times.Once);
-            _productServiceMock.Verify(x => x.GetProductsAsync(ProductsCount), Times.Once);
+            _configurationProviderMock.Verify(x => x.DefaultProductPageSize, Times.Once);
+            _productServiceMock.Verify(x => x.GetProductsAsync(page, ProductsCount), Times.Once);
             _mapperMock.Verify(x => x.Map<ProductViewModel>(It.Is<Product>(y => y.ProductId == ProductId)), Times.Once);
         }
 

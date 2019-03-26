@@ -5,6 +5,7 @@ using Microsoft.AspNetCore.Mvc;
 using NorthwindApp.Models;
 using NorthwindApp.Services.Interfaces;
 using NorthwindApp.UI.Models;
+using X.PagedList;
 using IConfigurationProvider = NorthwindApp.Core.Interfaces.IConfigurationProvider;
 
 namespace NorthwindApp.UI.Controllers
@@ -31,12 +32,9 @@ namespace NorthwindApp.UI.Controllers
             _configurationProvider = configurationProvider;
         }
 
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> Index(int page = 1)
         {
-            var productsCount = _configurationProvider.ProductPageSize;
-
-            var products = (await _productService.GetProductsAsync(productsCount))
-                .Select(_mapper.Map<ProductViewModel>);
+            var products = await GetPagedList(page);
 
             return View(products);
         }
@@ -94,6 +92,17 @@ namespace NorthwindApp.UI.Controllers
             await _productService.EditProductAsync(product);
 
             return RedirectToAction("Index");
+        }
+
+        private async Task<StaticPagedList<ProductViewModel>> GetPagedList(int page)
+        {
+            var pageSize = _configurationProvider.DefaultProductPageSize;
+            var totalCount = await _productService.GetProductsCountAsync();
+
+            var products = (await _productService.GetProductsAsync(page, pageSize))
+                .Select(_mapper.Map<ProductViewModel>);
+
+            return new StaticPagedList<ProductViewModel>(products, page, pageSize, totalCount);
         }
 
         private async Task<EditProductViewModel> BuildEditModel(ProductViewModel model)

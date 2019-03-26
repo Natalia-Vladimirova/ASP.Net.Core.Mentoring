@@ -19,6 +19,7 @@ using NorthwindApp.UI.Infrastructure.Middleware;
 using NorthwindApp.UI.Interfaces;
 using NorthwindApp.UI.Services;
 using IConfigurationProvider = NorthwindApp.Core.Interfaces.IConfigurationProvider;
+using ConfigurationProvider = NorthwindApp.Core.Providers.ConfigurationProvider;
 
 namespace NorthwindApp.UI
 {
@@ -46,7 +47,7 @@ namespace NorthwindApp.UI
             services.AddScoped<ICategoryService, CategoryService>();
             services.AddScoped<ISupplierService, SupplierService>();
 
-            services.AddSingleton<IConfigurationProvider, LoggingConfigurationProvider>();
+            services.AddSingleton<IConfigurationProvider, ConfigurationProvider>();
             services.AddSingleton<ILogger, AppInsightsLogger>();
 
             services.AddSingleton<IMimeHelper, MimeHelper>();

@@ -28,11 +28,16 @@ namespace NorthwindApp.DAL.Repositories
             return products.Select(_mapper.Map<Product>);
         }
 
-        public async Task<IEnumerable<Product>> GetProductsAsync(int count)
+        public async Task<IEnumerable<Product>> GetProductsAsync(int take, int skip)
         {
-            var products = await GetProducts(x => x.Take(count));
+            var products = await GetProducts(x => x.Skip(skip).Take(take));
             
             return products.Select(_mapper.Map<Product>);
+        }
+
+        public async Task<int> GetProductsCountAsync()
+        {
+            return await _context.Set<ProductDto>().CountAsync();
         }
 
         public async Task<Product> GetProductAsync(int id)

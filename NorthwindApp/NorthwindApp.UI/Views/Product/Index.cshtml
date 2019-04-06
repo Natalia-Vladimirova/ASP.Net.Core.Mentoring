@@ -4,10 +4,12 @@
 }
 
 <div class="row items-list">
-    <h3>Products</h3>
-    <a asp-action="Add"><h5>Add new</h5></a>
+    <div class="col-md-12">
+        <h3>Products</h3>
+        <a asp-action="Add"><h5>Add new</h5></a>
+    </div>
 </div>
 
 <div id="productsPage">
-    @Html.Partial("Partial/Index")
+    <partial name="Partial/Index" />
 </div>

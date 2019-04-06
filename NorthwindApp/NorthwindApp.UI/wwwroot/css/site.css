@@ -9,7 +9,7 @@
 }
 
 .items-list {
-    margin: 10px;
+    margin-bottom: 20px;
 }
     .items-list .list-element {
         border-bottom: 1px solid #eee;
@@ -31,3 +31,23 @@
             .items-list .list-element p.bold {
                 font-weight: bold;
             }
+
+.grayed-text {
+    color: #808080;
+}
+.centered-horizontally {
+    text-align: center;
+}
+
+.main-image {
+    width: 100%;
+}
+.default-header {
+    background-image: url(../images/cookies-1.jpg);
+    background-size: contain;
+    background-repeat: repeat-x;
+    height: 30px;
+}
+.default-footer {
+    height: 30px;
+}

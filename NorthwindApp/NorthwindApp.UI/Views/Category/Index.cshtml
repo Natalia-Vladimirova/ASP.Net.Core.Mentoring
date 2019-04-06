@@ -4,30 +4,41 @@
 }
 
 <div class="row items-list">
-    <div class="row list-element">
-        <div class="col-md-3 col-sm-3 col-xs-3">
-            <label>Name</label>
-        </div>
-        <div class="col-md-4 col-sm-4 col-xs-4">
-            <label>Description</label>
-        </div>
+    <div class="col-md-12">
+        <h3>Categories</h3>
     </div>
-    @foreach (var category in Model)
-    {
+</div>
+<div class="row items-list">
+    <div class="col-md-12">
         <div class="row list-element">
             <div class="col-md-3 col-sm-3 col-xs-3">
-                <p class="bold">@category.CategoryName</p>
+                <label>Name</label>
             </div>
             <div class="col-md-4 col-sm-4 col-xs-4">
-                <p>@category.Description</p>
-            </div>
-            <div class="col-md-2 col-sm-3 col-xs-3">
-                <img src="@Url.Action("Image", "Category", new { id = category.CategoryId })"
-                        alt="No image" />
-            </div>
-            <div class="col-md-3 col-sm-2 col-xs-2">
-                <a asp-action="UploadImage" asp-route-categoryId="@category.CategoryId"><p>Upload new image</p></a>
+                <label>Description</label>
             </div>
         </div>
-    }
+        @foreach (var category in Model)
+        {
+            <div class="row list-element">
+                <div class="col-md-3 col-sm-3 col-xs-3">
+                    <p class="bold">@category.CategoryName</p>
+                </div>
+                <div class="col-md-4 col-sm-4 col-xs-4">
+                    <p>@category.Description</p>
+                </div>
+                <div class="col-md-2 col-sm-3 col-xs-3">
+                    <img src="@Url.Action("Image", "Category", new { id = category.CategoryId })"
+                         alt="No image" />
+                </div>
+                <div class="col-md-3 col-sm-2 col-xs-2">
+                    <a asp-action="UploadImage" asp-route-categoryId="@category.CategoryId"><p>Upload new image</p></a>
+                </div>
+            </div>
+        }
+    </div>
 </div>
+
+@section Footer {
+    <h5 class="grayed-text">Please note that categories cannot be edited.</h5>
+}

@@ -1,8 +1,9 @@
 ﻿using AutoMapper;
 using NorthwindApp.Models;
+using NorthwindApp.UI.Infrastructure.Configuration;
 using NorthwindApp.UI.Models;
 
-namespace NorthwindApp.DAL.Mapping
+namespace NorthwindApp.UI.Infrastructure.Mapping
 {
     public class ViewModelProfile : Profile
     {
@@ -13,6 +14,8 @@ namespace NorthwindApp.DAL.Mapping
 
             CreateMap<Product, ProductViewModel>();
             CreateMap<Category, CategoryViewModel>();
+
+            CreateMap<Breadcrumb, BreadcrumbViewModel>();
         }
     }
 }

@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore;
 using Microsoft.AspNetCore.Hosting;
+using NorthwindApp.UI.Infrastructure.Extensions;
 
 namespace NorthwindApp.UI
 {
@@ -13,6 +14,7 @@ namespace NorthwindApp.UI
         public static IWebHost BuildWebHost(string[] args) =>
             WebHost.CreateDefaultBuilder(args)
                 .UseApplicationInsights()
+                .UseSiteMap()
                 .UseStartup<Startup>()
                 .Build();
     }

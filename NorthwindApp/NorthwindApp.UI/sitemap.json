@@ -1,0 +1,38 @@
+{
+  "SiteMap": {
+    "Title": "Home",
+    "Controller": "Home",
+    "Action": "Index",
+    "Breadcrumbs": [
+      {
+        "Title": "Products",
+        "Controller": "Product",
+        "Action": "Index",
+        "Breadcrumbs": [
+          {
+            "Title": "Create New",
+            "Controller": "Product",
+            "Action": "Add"
+          },
+          {
+            "Title": "Edit Product",
+            "Controller": "Product",
+            "Action": "Edit"
+          }
+        ]
+      },
+      {
+        "Title": "Categories",
+        "Controller": "Category",
+        "Action": "Index",
+        "Breadcrumbs": [
+          {
+            "Title": "Upload Image",
+            "Controller": "Category",
+            "Action": "UploadImage"
+          }
+        ]
+      }
+    ]
+  }
+}

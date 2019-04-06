@@ -14,12 +14,14 @@ using NorthwindApp.DAL.Interfaces;
 using NorthwindApp.DAL.Repositories;
 using NorthwindApp.Services;
 using NorthwindApp.Services.Interfaces;
+using NorthwindApp.UI.Infrastructure.Builders;
+using NorthwindApp.UI.Infrastructure.Configuration;
 using NorthwindApp.UI.Infrastructure.Filters;
 using NorthwindApp.UI.Infrastructure.Middleware;
 using NorthwindApp.UI.Interfaces;
 using NorthwindApp.UI.Services;
-using IConfigurationProvider = NorthwindApp.Core.Interfaces.IConfigurationProvider;
 using ConfigurationProvider = NorthwindApp.Core.Providers.ConfigurationProvider;
+using IConfigurationProvider = NorthwindApp.Core.Interfaces.IConfigurationProvider;
 
 namespace NorthwindApp.UI
 {
@@ -35,6 +37,8 @@ namespace NorthwindApp.UI
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            services.Configure<Breadcrumb>(options => _configuration.GetSection("SiteMap").Bind(options));
+
             services.AddDbContext<NorthwindDbContext>(
                 options => options.UseSqlServer(_configuration.GetConnectionString("NorthwindConnection")));
             services.AddScoped<DbContext>(x => x.GetService<NorthwindDbContext>());
@@ -46,6 +50,8 @@ namespace NorthwindApp.UI
             services.AddScoped<IProductService, ProductService>();
             services.AddScoped<ICategoryService, CategoryService>();
             services.AddScoped<ISupplierService, SupplierService>();
+
+            services.AddScoped<ISiteMapBuilder, SiteMapBuilder>();
 
             services.AddSingleton<IConfigurationProvider, ConfigurationProvider>();
             services.AddSingleton<ILogger, AppInsightsLogger>();

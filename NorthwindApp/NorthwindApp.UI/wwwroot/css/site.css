@@ -2,10 +2,12 @@
     padding-top: 50px;
     padding-bottom: 20px;
 }
-
 .body-content {
     padding-left: 15px;
     padding-right: 15px;
+}
+h2, h3 {
+    margin: 0;
 }
 
 .items-list {
@@ -50,4 +52,9 @@
 }
 .default-footer {
     height: 30px;
+}
+
+.breadcrumb.sitemap > li + li:before {
+    content: ">";
+    color: #808080;
 }

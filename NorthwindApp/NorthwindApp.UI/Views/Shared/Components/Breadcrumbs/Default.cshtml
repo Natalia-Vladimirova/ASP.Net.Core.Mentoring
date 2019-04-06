@@ -1,0 +1,20 @@
+﻿@model IEnumerable<BreadcrumbViewModel>
+
+@if (Model != null)
+{
+    <ul class="breadcrumb sitemap">
+        @foreach (var item in Model)
+        {
+            <li>
+                @if (item.IsCurrentPage)
+                {
+                    @item.Title
+                }
+                else
+                {
+                    <a asp-controller="@item.Controller" asp-action="@item.Action">@item.Title</a>
+                }
+            </li>
+        }
+    </ul>
+}

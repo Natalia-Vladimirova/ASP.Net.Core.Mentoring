@@ -28,11 +28,14 @@
                     <p>@category.Description</p>
                 </div>
                 <div class="col-md-2 col-sm-3 col-xs-3">
-                    <img src="@Url.Action("Image", "Category", new { id = category.CategoryId })"
-                         alt="No image" />
+                    <a northwind-id="category.CategoryId" target="_blank">
+                        <img src="@Url.Action("Image", "Category", new { id = category.CategoryId })"
+                             alt="No image" />
+                    </a>
                 </div>
                 <div class="col-md-3 col-sm-2 col-xs-2">
                     <a asp-action="UploadImage" asp-route-categoryId="@category.CategoryId"><p>Upload new image</p></a>
+                    @Html.NorthwindImageLink(category.CategoryId, "View image in new tab", new { target = "_blank" })
                 </div>
             </div>
         }

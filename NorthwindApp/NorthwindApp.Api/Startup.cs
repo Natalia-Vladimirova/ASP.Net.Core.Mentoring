@@ -5,6 +5,8 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using NorthwindApp.Core.Interfaces;
+using NorthwindApp.Core.Services;
 using NorthwindApp.DAL.Infrastructure;
 using NorthwindApp.DAL.Interfaces;
 using NorthwindApp.DAL.Repositories;
@@ -37,6 +39,7 @@ namespace NorthwindApp.Api
             services.AddScoped<ICategoryService, CategoryService>();
 
             services.AddSingleton<IConfigurationProvider, ConfigurationProvider>();
+            services.AddSingleton<IMimeHelper, MimeHelper>();
 
             services.AddAutoMapper();
 

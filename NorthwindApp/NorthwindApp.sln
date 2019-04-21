@@ -19,7 +19,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NorthwindApp.Core", "Northw
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tests", "Tests", "{3EDCEC11-7F44-46C2-B7DF-77CD83D7BA0D}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NorthwindApp.UI.Tests", "Tests\NorthwindApp.UI.Tests\NorthwindApp.UI.Tests.csproj", "{C5E6BA39-E13C-4C72-B187-DA3C36905243}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NorthwindApp.UI.Tests", "Tests\NorthwindApp.UI.Tests\NorthwindApp.UI.Tests.csproj", "{C5E6BA39-E13C-4C72-B187-DA3C36905243}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NorthwindApp.Api", "NorthwindApp.Api\NorthwindApp.Api.csproj", "{476C604A-4932-4DE1-B5AC-92F139492476}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -59,6 +61,10 @@ Global
 		{C5E6BA39-E13C-4C72-B187-DA3C36905243}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{C5E6BA39-E13C-4C72-B187-DA3C36905243}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{C5E6BA39-E13C-4C72-B187-DA3C36905243}.Release|Any CPU.Build.0 = Release|Any CPU
+		{476C604A-4932-4DE1-B5AC-92F139492476}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{476C604A-4932-4DE1-B5AC-92F139492476}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{476C604A-4932-4DE1-B5AC-92F139492476}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{476C604A-4932-4DE1-B5AC-92F139492476}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

@@ -47,12 +47,14 @@ namespace NorthwindApp.DAL.Repositories
             return _mapper.Map<Product>(product.FirstOrDefault());
         }
 
-        public async Task AddProductAsync(Product product)
+        public async Task<Product> AddProductAsync(Product product)
         {
             var productDto = _mapper.Map<ProductDto>(product);
 
             _context.Set<ProductDto>().Add(productDto);
             await _context.SaveChangesAsync();
+
+            return _mapper.Map<Product>(productDto);
         }
 
         public async Task EditProductAsync(Product product)
@@ -63,12 +65,26 @@ namespace NorthwindApp.DAL.Repositories
             await _context.SaveChangesAsync();
         }
 
+        public async Task DeleteProductAsync(int id)
+        {
+            var product = (await GetProducts(x => x.Where(y => y.ProductId == id))).FirstOrDefault();
+
+            if (product == null)
+            {
+                return;
+            }
+
+            _context.Set<ProductDto>().Remove(product);
+            await _context.SaveChangesAsync();
+        }
+
         private async Task<IEnumerable<ProductDto>> GetProducts(
             Func<IQueryable<ProductDto>, IQueryable<ProductDto>> filterQuery)
         {
             return await filterQuery(_context.Set<ProductDto>()
                 .Include(x => x.Category)
                 .Include(x => x.Supplier))
+                .AsNoTracking()
                 .ToListAsync();
         }
     }

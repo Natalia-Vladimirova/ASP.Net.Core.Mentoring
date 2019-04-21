@@ -14,8 +14,10 @@ namespace NorthwindApp.DAL.Interfaces
 
         Task<Product> GetProductAsync(int id);
 
-        Task AddProductAsync(Product product);
+        Task<Product> AddProductAsync(Product product);
 
         Task EditProductAsync(Product product);
+
+        Task DeleteProductAsync(int id);
     }
 }

@@ -42,5 +42,44 @@ namespace NorthwindApp.Api.Controllers
 
             return Ok(product);
         }
+
+        [HttpPost]
+        public async Task<ActionResult> Post([FromBody] Product product)
+        {
+            var insertedProduct = await _productService.AddProductAsync(product);
+
+            return CreatedAtAction(nameof(Get), new { id = insertedProduct.ProductId }, insertedProduct);
+        }
+
+        [HttpPut("{id}")]
+        public async Task<ActionResult> Put(int id, [FromBody] Product product)
+        {
+            if (id != product.ProductId)
+            {
+                return BadRequest();
+            }
+
+            if (await _productService.GetProductAsync(id) == null)
+            {
+                return NotFound();
+            }
+
+            await _productService.EditProductAsync(product);
+
+            return NoContent();
+        }
+
+        [HttpDelete("{id}")]
+        public async Task<ActionResult> Delete(int id)
+        {
+            if (await _productService.GetProductAsync(id) == null)
+            {
+                return NotFound();
+            }
+
+            await _productService.DeleteProductAsync(id);
+
+            return NoContent();
+        }
     }
 }

@@ -1,0 +1,326 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "version": "v1",
+    "title": "Northwind API"
+  },
+  "paths": {
+    "/api/Categories": {
+      "get": {
+        "tags": [ "Categories" ],
+        "summary": "Gets a list of categories",
+        "operationId": "Get",
+        "consumes": [],
+        "produces": [ "text/plain", "application/json", "text/json" ],
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "schema": {
+              "uniqueItems": false,
+              "type": "array",
+              "items": { "$ref": "#/definitions/Category" }
+            }
+          }
+        }
+      }
+    },
+    "/api/Categories/images/{id}": {
+      "get": {
+        "tags": [ "Categories" ],
+        "summary": "Gets an image of a category",
+        "operationId": "GetImage",
+        "consumes": [],
+        "produces": [ "text/plain", "application/json", "text/json" ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "Category id",
+            "required": true,
+            "type": "integer",
+            "format": "int32"
+          }
+        ],
+        "responses": {
+          "404": {
+            "description": "Requested image was not found",
+            "schema": { "$ref": "#/definitions/ProblemDetails" }
+          }
+        }
+      },
+      "put": {
+        "tags": [ "Categories" ],
+        "summary": "Uploads new image to specified category",
+        "operationId": "UploadImage",
+        "consumes": [ "multipart/form-data" ],
+        "produces": [ "text/plain", "application/json", "text/json" ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "Category id",
+            "required": true,
+            "type": "integer",
+            "format": "int32"
+          },
+          {
+            "name": "ContentType",
+            "in": "formData",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "ContentDisposition",
+            "in": "formData",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "Headers",
+            "in": "formData",
+            "required": false,
+            "type": "object"
+          },
+          {
+            "name": "Length",
+            "in": "formData",
+            "required": false,
+            "type": "integer",
+            "format": "int64"
+          },
+          {
+            "name": "Name",
+            "in": "formData",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "FileName",
+            "in": "formData",
+            "required": false,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "204": { "description": "New image was successfully uploaded" },
+          "400": {
+            "description": "New image should not be null",
+            "schema": { "$ref": "#/definitions/ProblemDetails" }
+          }
+        }
+      }
+    },
+    "/api/Products": {
+      "get": {
+        "tags": [ "Products" ],
+        "summary": "Gets a list of products",
+        "operationId": "Get",
+        "consumes": [],
+        "produces": [ "text/plain", "application/json", "text/json" ],
+        "parameters": [
+          {
+            "name": "page",
+            "in": "query",
+            "description": "A page of products which should be returned",
+            "required": false,
+            "type": "integer",
+            "format": "int32"
+          },
+          {
+            "name": "pageSize",
+            "in": "query",
+            "description": "A number of products which should be returned. Set to 0 to get all products",
+            "required": false,
+            "type": "integer",
+            "format": "int32"
+          }
+        ],
+        "responses": {
+          "400": {
+            "description": "Page and page size should be more or equal zero",
+            "schema": { "$ref": "#/definitions/ProblemDetails" }
+          }
+        }
+      },
+      "post": {
+        "tags": [ "Products" ],
+        "summary": "Creates new product",
+        "operationId": "Post",
+        "consumes": [ "application/json-patch+json", "application/json", "text/json", "application/*+json" ],
+        "produces": [],
+        "parameters": [
+          {
+            "name": "product",
+            "in": "body",
+            "description": "A product which should be created",
+            "required": false,
+            "schema": { "$ref": "#/definitions/Product" }
+          }
+        ],
+        "responses": { "201": { "description": "New product was created" } }
+      }
+    },
+    "/api/Products/{id}": {
+      "get": {
+        "tags": [ "Products" ],
+        "summary": "Gets a product by id",
+        "operationId": "Get",
+        "consumes": [],
+        "produces": [ "text/plain", "application/json", "text/json" ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "Product id",
+            "required": true,
+            "type": "integer",
+            "format": "int32"
+          }
+        ],
+        "responses": {
+          "404": {
+            "description": "Requested product was not found",
+            "schema": { "$ref": "#/definitions/ProblemDetails" }
+          }
+        }
+      },
+      "put": {
+        "tags": [ "Products" ],
+        "summary": "Updates an existing product",
+        "operationId": "Put",
+        "consumes": [ "application/json-patch+json", "application/json", "text/json", "application/*+json" ],
+        "produces": [ "text/plain", "application/json", "text/json" ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "Id of a product to update",
+            "required": true,
+            "type": "integer",
+            "format": "int32"
+          },
+          {
+            "name": "product",
+            "in": "body",
+            "description": "A product to update",
+            "required": false,
+            "schema": { "$ref": "#/definitions/Product" }
+          }
+        ],
+        "responses": {
+          "204": { "description": "A product was successfully updated" },
+          "400": {
+            "description": "Id in route should be equal to id of a product to update",
+            "schema": { "$ref": "#/definitions/ProblemDetails" }
+          },
+          "404": {
+            "description": "A product was not found",
+            "schema": { "$ref": "#/definitions/ProblemDetails" }
+          }
+        }
+      },
+      "delete": {
+        "tags": [ "Products" ],
+        "summary": "Deletes an existing product",
+        "operationId": "Delete",
+        "consumes": [],
+        "produces": [ "text/plain", "application/json", "text/json" ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "Id of a product to delete",
+            "required": true,
+            "type": "integer",
+            "format": "int32"
+          }
+        ],
+        "responses": {
+          "204": { "description": "A product was successfully deleted" },
+          "404": {
+            "description": "A product was not found",
+            "schema": { "$ref": "#/definitions/ProblemDetails" }
+          }
+        }
+      }
+    }
+  },
+  "definitions": {
+    "Category": {
+      "type": "object",
+      "properties": {
+        "description": { "type": "string" },
+        "categoryId": {
+          "format": "int32",
+          "type": "integer"
+        },
+        "categoryName": { "type": "string" }
+      }
+    },
+    "ProblemDetails": {
+      "type": "object",
+      "properties": {
+        "type": { "type": "string" },
+        "title": { "type": "string" },
+        "status": {
+          "format": "int32",
+          "type": "integer"
+        },
+        "detail": { "type": "string" },
+        "instance": { "type": "string" }
+      },
+      "additionalProperties": { "type": "object" }
+    },
+    "Product": {
+      "type": "object",
+      "properties": {
+        "productId": {
+          "format": "int32",
+          "type": "integer"
+        },
+        "productName": { "type": "string" },
+        "quantityPerUnit": { "type": "string" },
+        "unitPrice": {
+          "format": "double",
+          "type": "number"
+        },
+        "unitsInStock": {
+          "format": "int32",
+          "type": "integer"
+        },
+        "unitsOnOrder": {
+          "format": "int32",
+          "type": "integer"
+        },
+        "reorderLevel": {
+          "format": "int32",
+          "type": "integer"
+        },
+        "discontinued": { "type": "boolean" },
+        "supplier": { "$ref": "#/definitions/BaseSupplier" },
+        "category": { "$ref": "#/definitions/BaseCategory" }
+      }
+    },
+    "BaseSupplier": {
+      "type": "object",
+      "properties": {
+        "supplierId": {
+          "format": "int32",
+          "type": "integer"
+        },
+        "companyName": { "type": "string" }
+      }
+    },
+    "BaseCategory": {
+      "type": "object",
+      "properties": {
+        "categoryId": {
+          "format": "int32",
+          "type": "integer"
+        },
+        "categoryName": { "type": "string" }
+      }
+    }
+  }
+}

@@ -6,17 +6,30 @@ using NorthwindApp.Services.Interfaces;
 
 namespace NorthwindApp.Api.Controllers
 {
+    /// <inheritdoc />
+    /// <summary>
+    /// Represents a service for managing products
+    /// </summary>
     [Route("api/[controller]")]
     [ApiController]
     public class ProductsController : ControllerBase
     {
         private readonly IProductService _productService;
 
+        /// <inheritdoc />
         public ProductsController(IProductService productService)
         {
             _productService = productService;
         }
 
+        /// <summary>
+        /// Gets a list of products
+        /// </summary>
+        /// <param name="page">A page of products which should be returned</param>
+        /// <param name="pageSize">A number of products which should be returned. Set to 0 to get all products</param>
+        /// <returns>A list of products</returns>
+        /// <response code="400">Page and page size should be more or equal zero</response>
+        [ProducesResponseType(400)]
         [HttpGet]
         public async Task<ActionResult<IEnumerable<Product>>> Get(int page, int pageSize)
         {
@@ -30,6 +43,13 @@ namespace NorthwindApp.Api.Controllers
             return Ok(products);
         }
 
+        /// <summary>
+        /// Gets a product by id
+        /// </summary>
+        /// <param name="id">Product id</param>
+        /// <returns>A product</returns>
+        /// <response code="404">Requested product was not found</response>
+        [ProducesResponseType(404)]
         [HttpGet("{id}")]
         public async Task<ActionResult<Product>> Get(int id)
         {
@@ -43,6 +63,13 @@ namespace NorthwindApp.Api.Controllers
             return Ok(product);
         }
 
+        /// <summary>
+        /// Creates new product
+        /// </summary>
+        /// <param name="product">A product which should be created</param>
+        /// <returns>A newly created product</returns>
+        /// <response code="201">New product was created</response>
+        [ProducesResponseType(201)]
         [HttpPost]
         public async Task<ActionResult> Post([FromBody] Product product)
         {
@@ -51,6 +78,17 @@ namespace NorthwindApp.Api.Controllers
             return CreatedAtAction(nameof(Get), new { id = insertedProduct.ProductId }, insertedProduct);
         }
 
+        /// <summary>
+        /// Updates an existing product
+        /// </summary>
+        /// <param name="id">Id of a product to update</param>
+        /// <param name="product">A product to update</param>
+        /// <response code="204">A product was successfully updated</response>
+        /// <response code="400">Id in route should be equal to id of a product to update</response>
+        /// <response code="404">A product was not found</response>
+        [ProducesResponseType(204)]
+        [ProducesResponseType(400)]
+        [ProducesResponseType(404)]
         [HttpPut("{id}")]
         public async Task<ActionResult> Put(int id, [FromBody] Product product)
         {
@@ -69,6 +107,14 @@ namespace NorthwindApp.Api.Controllers
             return NoContent();
         }
 
+        /// <summary>
+        /// Deletes an existing product
+        /// </summary>
+        /// <param name="id">Id of a product to delete</param>
+        /// <response code="204">A product was successfully deleted</response>
+        /// <response code="404">A product was not found</response>
+        [ProducesResponseType(204)]
+        [ProducesResponseType(404)]
         [HttpDelete("{id}")]
         public async Task<ActionResult> Delete(int id)
         {

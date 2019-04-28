@@ -33,7 +33,8 @@ namespace NorthwindApp.Api.Controllers
         /// Gets a list of categories
         /// </summary>
         /// <returns>A list of all categories</returns>
-        [HttpGet]
+        [ProducesResponseType(typeof(IEnumerable<Category>), StatusCodes.Status200OK)]
+        [HttpGet(Name = "GetCategories")]
         public async Task<ActionResult<IEnumerable<Category>>> Get()
         {
             var categories = await _categoryService.GetCategoriesAsync();
@@ -47,8 +48,9 @@ namespace NorthwindApp.Api.Controllers
         /// <param name="id">Category id</param>
         /// <returns>An image</returns>
         /// <response code="404">Requested image was not found</response>
-        [ProducesResponseType(404)]
-        [HttpGet("images/{id}")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(typeof(void), StatusCodes.Status404NotFound)]
+        [HttpGet("images/{id}", Name = "GetCategoryImage")]
         public async Task<ActionResult> GetImage(int id)
         {
             var image = await _categoryService.GetCategoryImageAsync(id);
@@ -68,9 +70,9 @@ namespace NorthwindApp.Api.Controllers
         /// <param name="image">New Image</param>
         /// <response code="204">New image was successfully uploaded</response>
         /// <response code="400">New image should not be null</response>
-        [ProducesResponseType(204)]
-        [ProducesResponseType(400)]
-        [HttpPut("images/{id}")]
+        [ProducesResponseType(typeof(void), StatusCodes.Status204NoContent)]
+        [ProducesResponseType(typeof(void), StatusCodes.Status400BadRequest)]
+        [HttpPut("images/{id}", Name = "UploadCategoryImage")]
         public async Task<ActionResult> UploadImage(int id, [FromForm] IFormFile image)
         {
             if (image  == null)

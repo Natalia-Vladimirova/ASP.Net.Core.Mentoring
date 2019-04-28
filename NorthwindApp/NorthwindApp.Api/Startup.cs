@@ -8,6 +8,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using NorthwindApp.Api.Filters;
 using NorthwindApp.Core.Interfaces;
 using NorthwindApp.Core.Services;
 using NorthwindApp.DAL.Infrastructure;
@@ -53,6 +54,7 @@ namespace NorthwindApp.Api
             {
                 c.SwaggerDoc("v1", new Info { Title = "Northwind API", Version = "v1" });
                 c.IncludeXmlComments(XmlCommentsFilePath);
+                c.OperationFilter<FormFileSwaggerFilter>();
             });
         }
 

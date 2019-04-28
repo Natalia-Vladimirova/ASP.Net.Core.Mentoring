@@ -9,7 +9,7 @@
       "get": {
         "tags": [ "Categories" ],
         "summary": "Gets a list of categories",
-        "operationId": "Get",
+        "operationId": "GetCategories",
         "consumes": [],
         "produces": [ "text/plain", "application/json", "text/json" ],
         "parameters": [],
@@ -29,7 +29,7 @@
       "get": {
         "tags": [ "Categories" ],
         "summary": "Gets an image of a category",
-        "operationId": "GetImage",
+        "operationId": "GetCategoryImage",
         "consumes": [],
         "produces": [ "text/plain", "application/json", "text/json" ],
         "parameters": [
@@ -43,6 +43,7 @@
           }
         ],
         "responses": {
+          "200": { "description": "Success" },
           "404": {
             "description": "Requested image was not found",
             "schema": { "$ref": "#/definitions/ProblemDetails" }
@@ -52,7 +53,7 @@
       "put": {
         "tags": [ "Categories" ],
         "summary": "Uploads new image to specified category",
-        "operationId": "UploadImage",
+        "operationId": "UploadCategoryImage",
         "consumes": [ "multipart/form-data" ],
         "produces": [ "text/plain", "application/json", "text/json" ],
         "parameters": [
@@ -65,41 +66,10 @@
             "format": "int32"
           },
           {
-            "name": "ContentType",
+            "name": "image",
             "in": "formData",
             "required": false,
-            "type": "string"
-          },
-          {
-            "name": "ContentDisposition",
-            "in": "formData",
-            "required": false,
-            "type": "string"
-          },
-          {
-            "name": "Headers",
-            "in": "formData",
-            "required": false,
-            "type": "object"
-          },
-          {
-            "name": "Length",
-            "in": "formData",
-            "required": false,
-            "type": "integer",
-            "format": "int64"
-          },
-          {
-            "name": "Name",
-            "in": "formData",
-            "required": false,
-            "type": "string"
-          },
-          {
-            "name": "FileName",
-            "in": "formData",
-            "required": false,
-            "type": "string"
+            "type": "file"
           }
         ],
         "responses": {
@@ -115,7 +85,7 @@
       "get": {
         "tags": [ "Products" ],
         "summary": "Gets a list of products",
-        "operationId": "Get",
+        "operationId": "GetProducts",
         "consumes": [],
         "produces": [ "text/plain", "application/json", "text/json" ],
         "parameters": [
@@ -137,6 +107,14 @@
           }
         ],
         "responses": {
+          "200": {
+            "description": "Success",
+            "schema": {
+              "uniqueItems": false,
+              "type": "array",
+              "items": { "$ref": "#/definitions/Product" }
+            }
+          },
           "400": {
             "description": "Page and page size should be more or equal zero",
             "schema": { "$ref": "#/definitions/ProblemDetails" }
@@ -146,9 +124,9 @@
       "post": {
         "tags": [ "Products" ],
         "summary": "Creates new product",
-        "operationId": "Post",
+        "operationId": "CreateProduct",
         "consumes": [ "application/json-patch+json", "application/json", "text/json", "application/*+json" ],
-        "produces": [],
+        "produces": [ "text/plain", "application/json", "text/json" ],
         "parameters": [
           {
             "name": "product",
@@ -158,14 +136,19 @@
             "schema": { "$ref": "#/definitions/Product" }
           }
         ],
-        "responses": { "201": { "description": "New product was created" } }
+        "responses": {
+          "201": {
+            "description": "New product was created",
+            "schema": { "$ref": "#/definitions/Product" }
+          }
+        }
       }
     },
     "/api/Products/{id}": {
       "get": {
         "tags": [ "Products" ],
         "summary": "Gets a product by id",
-        "operationId": "Get",
+        "operationId": "GetProduct",
         "consumes": [],
         "produces": [ "text/plain", "application/json", "text/json" ],
         "parameters": [
@@ -179,6 +162,10 @@
           }
         ],
         "responses": {
+          "200": {
+            "description": "Success",
+            "schema": { "$ref": "#/definitions/Product" }
+          },
           "404": {
             "description": "Requested product was not found",
             "schema": { "$ref": "#/definitions/ProblemDetails" }
@@ -188,7 +175,7 @@
       "put": {
         "tags": [ "Products" ],
         "summary": "Updates an existing product",
-        "operationId": "Put",
+        "operationId": "UpdateProduct",
         "consumes": [ "application/json-patch+json", "application/json", "text/json", "application/*+json" ],
         "produces": [ "text/plain", "application/json", "text/json" ],
         "parameters": [
@@ -223,7 +210,7 @@
       "delete": {
         "tags": [ "Products" ],
         "summary": "Deletes an existing product",
-        "operationId": "Delete",
+        "operationId": "DeleteProduct",
         "consumes": [],
         "produces": [ "text/plain", "application/json", "text/json" ],
         "parameters": [

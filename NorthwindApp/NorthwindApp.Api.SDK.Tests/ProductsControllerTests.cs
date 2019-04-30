@@ -10,12 +10,12 @@ namespace NorthwindApp.Api.SDK.Tests
     public class ProductsControllerTests
     {
         private readonly ITestOutputHelper _testOutputHelper;
-        private readonly INorthwindAPI _client;
+        private readonly INorthwindApiClient _client;
 
         public ProductsControllerTests(ITestOutputHelper testOutputHelper)
         {
             _testOutputHelper = testOutputHelper;
-            _client = new NorthwindAPI(new Uri("http://localhost:5000"));
+            _client = new NorthwindApiClient(new Uri("http://localhost:5000"));
         }
 
         [Fact]

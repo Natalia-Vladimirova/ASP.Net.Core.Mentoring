@@ -49,7 +49,8 @@ namespace NorthwindApp.Api.Controllers
         /// <returns>An image</returns>
         /// <response code="404">Requested image was not found</response>
         [ProducesResponseType(StatusCodes.Status200OK)]
-        [ProducesResponseType(typeof(void), StatusCodes.Status404NotFound)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [Produces(typeof(byte[]))]
         [HttpGet("images/{id}", Name = "GetCategoryImage")]
         public async Task<ActionResult> GetImage(int id)
         {

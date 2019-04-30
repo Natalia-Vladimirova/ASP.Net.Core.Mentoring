@@ -31,7 +31,7 @@
         "summary": "Gets an image of a category",
         "operationId": "GetCategoryImage",
         "consumes": [],
-        "produces": [ "text/plain", "application/json", "text/json" ],
+        "produces": [],
         "parameters": [
           {
             "name": "id",
@@ -43,7 +43,13 @@
           }
         ],
         "responses": {
-          "200": { "description": "Success" },
+          "200": {
+            "description": "Success",
+            "schema": {
+              "format": "byte",
+              "type": "string"
+            }
+          },
           "404": {
             "description": "Requested image was not found",
             "schema": { "$ref": "#/definitions/ProblemDetails" }

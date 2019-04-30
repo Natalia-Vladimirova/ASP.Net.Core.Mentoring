@@ -17,7 +17,7 @@ namespace NorthwindApp.Api.SDK.v1
 
     /// <summary>
     /// </summary>
-    public partial interface INorthwindAPI : System.IDisposable
+    public partial interface INorthwindApiClient : System.IDisposable
     {
         /// <summary>
         /// The base URI of the service.
@@ -58,7 +58,7 @@ namespace NorthwindApp.Api.SDK.v1
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        Task<HttpOperationResponse<ProblemDetails>> GetCategoryImageWithHttpMessagesAsync(int id, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<HttpOperationResponse<object>> GetCategoryImageWithHttpMessagesAsync(int id, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
 
         /// <summary>
         /// Uploads new image to specified category

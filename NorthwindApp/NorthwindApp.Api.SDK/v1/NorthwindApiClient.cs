@@ -19,7 +19,7 @@ namespace NorthwindApp.Api.SDK.v1
     using System.Threading;
     using System.Threading.Tasks;
 
-    public partial class NorthwindAPI : ServiceClient<NorthwindAPI>, INorthwindAPI
+    public partial class NorthwindApiClient : ServiceClient<NorthwindApiClient>, INorthwindApiClient
     {
         /// <summary>
         /// The base URI of the service.
@@ -37,31 +37,31 @@ namespace NorthwindApp.Api.SDK.v1
         public JsonSerializerSettings DeserializationSettings { get; private set; }
 
         /// <summary>
-        /// Initializes a new instance of the NorthwindAPI class.
+        /// Initializes a new instance of the NorthwindApiClient class.
         /// </summary>
         /// <param name='httpClient'>
         /// HttpClient to be used
         /// </param>
         /// <param name='disposeHttpClient'>
-        /// True: will dispose the provided httpClient on calling NorthwindAPI.Dispose(). False: will not dispose provided httpClient</param>
-        public NorthwindAPI(HttpClient httpClient, bool disposeHttpClient) : base(httpClient, disposeHttpClient)
+        /// True: will dispose the provided httpClient on calling NorthwindApiClient.Dispose(). False: will not dispose provided httpClient</param>
+        public NorthwindApiClient(HttpClient httpClient, bool disposeHttpClient) : base(httpClient, disposeHttpClient)
         {
             Initialize();
         }
 
         /// <summary>
-        /// Initializes a new instance of the NorthwindAPI class.
+        /// Initializes a new instance of the NorthwindApiClient class.
         /// </summary>
         /// <param name='handlers'>
         /// Optional. The delegating handlers to add to the http client pipeline.
         /// </param>
-        public NorthwindAPI(params DelegatingHandler[] handlers) : base(handlers)
+        public NorthwindApiClient(params DelegatingHandler[] handlers) : base(handlers)
         {
             Initialize();
         }
 
         /// <summary>
-        /// Initializes a new instance of the NorthwindAPI class.
+        /// Initializes a new instance of the NorthwindApiClient class.
         /// </summary>
         /// <param name='rootHandler'>
         /// Optional. The http client handler used to handle http transport.
@@ -69,13 +69,13 @@ namespace NorthwindApp.Api.SDK.v1
         /// <param name='handlers'>
         /// Optional. The delegating handlers to add to the http client pipeline.
         /// </param>
-        public NorthwindAPI(HttpClientHandler rootHandler, params DelegatingHandler[] handlers) : base(rootHandler, handlers)
+        public NorthwindApiClient(HttpClientHandler rootHandler, params DelegatingHandler[] handlers) : base(rootHandler, handlers)
         {
             Initialize();
         }
 
         /// <summary>
-        /// Initializes a new instance of the NorthwindAPI class.
+        /// Initializes a new instance of the NorthwindApiClient class.
         /// </summary>
         /// <param name='baseUri'>
         /// Optional. The base URI of the service.
@@ -86,7 +86,7 @@ namespace NorthwindApp.Api.SDK.v1
         /// <exception cref="System.ArgumentNullException">
         /// Thrown when a required parameter is null
         /// </exception>
-        public NorthwindAPI(System.Uri baseUri, params DelegatingHandler[] handlers) : this(handlers)
+        public NorthwindApiClient(System.Uri baseUri, params DelegatingHandler[] handlers) : this(handlers)
         {
             if (baseUri == null)
             {
@@ -96,7 +96,7 @@ namespace NorthwindApp.Api.SDK.v1
         }
 
         /// <summary>
-        /// Initializes a new instance of the NorthwindAPI class.
+        /// Initializes a new instance of the NorthwindApiClient class.
         /// </summary>
         /// <param name='baseUri'>
         /// Optional. The base URI of the service.
@@ -110,7 +110,7 @@ namespace NorthwindApp.Api.SDK.v1
         /// <exception cref="System.ArgumentNullException">
         /// Thrown when a required parameter is null
         /// </exception>
-        public NorthwindAPI(System.Uri baseUri, HttpClientHandler rootHandler, params DelegatingHandler[] handlers) : this(rootHandler, handlers)
+        public NorthwindApiClient(System.Uri baseUri, HttpClientHandler rootHandler, params DelegatingHandler[] handlers) : this(rootHandler, handlers)
         {
             if (baseUri == null)
             {
@@ -297,7 +297,7 @@ namespace NorthwindApp.Api.SDK.v1
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<HttpOperationResponse<ProblemDetails>> GetCategoryImageWithHttpMessagesAsync(int id, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<HttpOperationResponse<object>> GetCategoryImageWithHttpMessagesAsync(int id, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
@@ -373,9 +373,27 @@ namespace NorthwindApp.Api.SDK.v1
                 throw ex;
             }
             // Create Result
-            var _result = new HttpOperationResponse<ProblemDetails>();
+            var _result = new HttpOperationResponse<object>();
             _result.Request = _httpRequest;
             _result.Response = _httpResponse;
+            // Deserialize Response
+            if ((int)_statusCode == 200)
+            {
+                _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
+                try
+                {
+                    _result.Body = SafeJsonConvert.DeserializeObject<byte[]>(_responseContent, DeserializationSettings);
+                }
+                catch (JsonException ex)
+                {
+                    _httpRequest.Dispose();
+                    if (_httpResponse != null)
+                    {
+                        _httpResponse.Dispose();
+                    }
+                    throw new SerializationException("Unable to deserialize the response.", _responseContent, ex);
+                }
+            }
             // Deserialize Response
             if ((int)_statusCode == 404)
             {

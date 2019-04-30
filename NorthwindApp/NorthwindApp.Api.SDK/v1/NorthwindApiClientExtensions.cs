@@ -14,9 +14,9 @@ namespace NorthwindApp.Api.SDK.v1
     using System.Threading.Tasks;
 
     /// <summary>
-    /// Extension methods for NorthwindAPI.
+    /// Extension methods for NorthwindApiClient.
     /// </summary>
-    public static partial class NorthwindAPIExtensions
+    public static partial class NorthwindApiClientExtensions
     {
             /// <summary>
             /// Gets a list of categories
@@ -24,7 +24,7 @@ namespace NorthwindApp.Api.SDK.v1
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
-            public static IList<Category> GetCategories(this INorthwindAPI operations)
+            public static IList<Category> GetCategories(this INorthwindApiClient operations)
             {
                 return operations.GetCategoriesAsync().GetAwaiter().GetResult();
             }
@@ -38,7 +38,7 @@ namespace NorthwindApp.Api.SDK.v1
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<IList<Category>> GetCategoriesAsync(this INorthwindAPI operations, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<IList<Category>> GetCategoriesAsync(this INorthwindApiClient operations, CancellationToken cancellationToken = default(CancellationToken))
             {
                 using (var _result = await operations.GetCategoriesWithHttpMessagesAsync(null, cancellationToken).ConfigureAwait(false))
                 {
@@ -55,7 +55,7 @@ namespace NorthwindApp.Api.SDK.v1
             /// <param name='id'>
             /// Category id
             /// </param>
-            public static ProblemDetails GetCategoryImage(this INorthwindAPI operations, int id)
+            public static object GetCategoryImage(this INorthwindApiClient operations, int id)
             {
                 return operations.GetCategoryImageAsync(id).GetAwaiter().GetResult();
             }
@@ -72,7 +72,7 @@ namespace NorthwindApp.Api.SDK.v1
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<ProblemDetails> GetCategoryImageAsync(this INorthwindAPI operations, int id, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<object> GetCategoryImageAsync(this INorthwindApiClient operations, int id, CancellationToken cancellationToken = default(CancellationToken))
             {
                 using (var _result = await operations.GetCategoryImageWithHttpMessagesAsync(id, null, cancellationToken).ConfigureAwait(false))
                 {
@@ -91,7 +91,7 @@ namespace NorthwindApp.Api.SDK.v1
             /// </param>
             /// <param name='image'>
             /// </param>
-            public static ProblemDetails UploadCategoryImage(this INorthwindAPI operations, int id, Stream image = default(Stream))
+            public static ProblemDetails UploadCategoryImage(this INorthwindApiClient operations, int id, Stream image = default(Stream))
             {
                 return operations.UploadCategoryImageAsync(id, image).GetAwaiter().GetResult();
             }
@@ -110,7 +110,7 @@ namespace NorthwindApp.Api.SDK.v1
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<ProblemDetails> UploadCategoryImageAsync(this INorthwindAPI operations, int id, Stream image = default(Stream), CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<ProblemDetails> UploadCategoryImageAsync(this INorthwindApiClient operations, int id, Stream image = default(Stream), CancellationToken cancellationToken = default(CancellationToken))
             {
                 using (var _result = await operations.UploadCategoryImageWithHttpMessagesAsync(id, image, null, cancellationToken).ConfigureAwait(false))
                 {
@@ -130,7 +130,7 @@ namespace NorthwindApp.Api.SDK.v1
             /// <param name='pageSize'>
             /// A number of products which should be returned. Set to 0 to get all products
             /// </param>
-            public static object GetProducts(this INorthwindAPI operations, int? page = default(int?), int? pageSize = default(int?))
+            public static object GetProducts(this INorthwindApiClient operations, int? page = default(int?), int? pageSize = default(int?))
             {
                 return operations.GetProductsAsync(page, pageSize).GetAwaiter().GetResult();
             }
@@ -150,7 +150,7 @@ namespace NorthwindApp.Api.SDK.v1
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<object> GetProductsAsync(this INorthwindAPI operations, int? page = default(int?), int? pageSize = default(int?), CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<object> GetProductsAsync(this INorthwindApiClient operations, int? page = default(int?), int? pageSize = default(int?), CancellationToken cancellationToken = default(CancellationToken))
             {
                 using (var _result = await operations.GetProductsWithHttpMessagesAsync(page, pageSize, null, cancellationToken).ConfigureAwait(false))
                 {
@@ -167,7 +167,7 @@ namespace NorthwindApp.Api.SDK.v1
             /// <param name='product'>
             /// A product which should be created
             /// </param>
-            public static Product CreateProduct(this INorthwindAPI operations, Product product = default(Product))
+            public static Product CreateProduct(this INorthwindApiClient operations, Product product = default(Product))
             {
                 return operations.CreateProductAsync(product).GetAwaiter().GetResult();
             }
@@ -184,7 +184,7 @@ namespace NorthwindApp.Api.SDK.v1
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<Product> CreateProductAsync(this INorthwindAPI operations, Product product = default(Product), CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<Product> CreateProductAsync(this INorthwindApiClient operations, Product product = default(Product), CancellationToken cancellationToken = default(CancellationToken))
             {
                 using (var _result = await operations.CreateProductWithHttpMessagesAsync(product, null, cancellationToken).ConfigureAwait(false))
                 {
@@ -201,7 +201,7 @@ namespace NorthwindApp.Api.SDK.v1
             /// <param name='id'>
             /// Product id
             /// </param>
-            public static object GetProduct(this INorthwindAPI operations, int id)
+            public static object GetProduct(this INorthwindApiClient operations, int id)
             {
                 return operations.GetProductAsync(id).GetAwaiter().GetResult();
             }
@@ -218,7 +218,7 @@ namespace NorthwindApp.Api.SDK.v1
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<object> GetProductAsync(this INorthwindAPI operations, int id, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<object> GetProductAsync(this INorthwindApiClient operations, int id, CancellationToken cancellationToken = default(CancellationToken))
             {
                 using (var _result = await operations.GetProductWithHttpMessagesAsync(id, null, cancellationToken).ConfigureAwait(false))
                 {
@@ -238,7 +238,7 @@ namespace NorthwindApp.Api.SDK.v1
             /// <param name='product'>
             /// A product to update
             /// </param>
-            public static ProblemDetails UpdateProduct(this INorthwindAPI operations, int id, Product product = default(Product))
+            public static ProblemDetails UpdateProduct(this INorthwindApiClient operations, int id, Product product = default(Product))
             {
                 return operations.UpdateProductAsync(id, product).GetAwaiter().GetResult();
             }
@@ -258,7 +258,7 @@ namespace NorthwindApp.Api.SDK.v1
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<ProblemDetails> UpdateProductAsync(this INorthwindAPI operations, int id, Product product = default(Product), CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<ProblemDetails> UpdateProductAsync(this INorthwindApiClient operations, int id, Product product = default(Product), CancellationToken cancellationToken = default(CancellationToken))
             {
                 using (var _result = await operations.UpdateProductWithHttpMessagesAsync(id, product, null, cancellationToken).ConfigureAwait(false))
                 {
@@ -275,7 +275,7 @@ namespace NorthwindApp.Api.SDK.v1
             /// <param name='id'>
             /// Id of a product to delete
             /// </param>
-            public static ProblemDetails DeleteProduct(this INorthwindAPI operations, int id)
+            public static ProblemDetails DeleteProduct(this INorthwindApiClient operations, int id)
             {
                 return operations.DeleteProductAsync(id).GetAwaiter().GetResult();
             }
@@ -292,7 +292,7 @@ namespace NorthwindApp.Api.SDK.v1
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<ProblemDetails> DeleteProductAsync(this INorthwindAPI operations, int id, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<ProblemDetails> DeleteProductAsync(this INorthwindApiClient operations, int id, CancellationToken cancellationToken = default(CancellationToken))
             {
                 using (var _result = await operations.DeleteProductWithHttpMessagesAsync(id, null, cancellationToken).ConfigureAwait(false))
                 {

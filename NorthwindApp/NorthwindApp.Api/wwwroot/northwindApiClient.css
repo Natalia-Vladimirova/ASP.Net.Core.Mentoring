@@ -1,0 +1,6 @@
+﻿.body-content, .results-container {
+    padding-top: 20px;
+}
+    .results-container .item-header {
+        font-weight: bold;
+    }

@@ -70,8 +70,9 @@ namespace NorthwindApp.Api
                 app.UseHsts();
             }
 
-            app.UseSwagger();
+            app.UseStaticFiles();
 
+            app.UseSwagger();
             app.UseSwaggerUI(c =>
             {
                 c.SwaggerEndpoint("/swagger/v1/swagger.json", "Northwind API v1");

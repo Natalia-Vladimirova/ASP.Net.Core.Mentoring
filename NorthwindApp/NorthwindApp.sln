@@ -27,7 +27,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NorthwindApp.Api.SDK", "Nor
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NorthwindApp.Api.SDK.Tests", "NorthwindApp.Api.SDK.Tests\NorthwindApp.Api.SDK.Tests.csproj", "{7B452EE8-7992-4620-8578-885123A822BF}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NorthwindApp.ConsoleApp", "NorthwindApp.ConsoleApp\NorthwindApp.ConsoleApp.csproj", "{AD8897D2-DF91-4365-B1A0-B7B31C0E9F62}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NorthwindApp.ConsoleApp", "NorthwindApp.ConsoleApp\NorthwindApp.ConsoleApp.csproj", "{AD8897D2-DF91-4365-B1A0-B7B31C0E9F62}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

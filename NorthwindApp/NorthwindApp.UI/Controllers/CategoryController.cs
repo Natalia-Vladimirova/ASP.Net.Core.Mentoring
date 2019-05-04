@@ -2,6 +2,7 @@
 using System.Linq;
 using System.Threading.Tasks;
 using AutoMapper;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using NorthwindApp.Core.Interfaces;
 using NorthwindApp.Services.Interfaces;
@@ -9,6 +10,7 @@ using NorthwindApp.UI.Models;
 
 namespace NorthwindApp.UI.Controllers
 {
+    [Authorize]
     public class CategoryController : Controller
     {
         private readonly ICategoryService _categoryService;

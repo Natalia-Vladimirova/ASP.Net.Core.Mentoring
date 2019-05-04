@@ -1,6 +1,7 @@
 ﻿using System.Linq;
 using System.Threading.Tasks;
 using AutoMapper;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using NorthwindApp.Models;
 using NorthwindApp.Services.Interfaces;
@@ -10,6 +11,7 @@ using IConfigurationProvider = NorthwindApp.Core.Interfaces.IConfigurationProvid
 
 namespace NorthwindApp.UI.Controllers
 {
+    [Authorize]
     public class ProductController : Controller
     {
         private readonly IProductService _productService;

@@ -2,6 +2,7 @@
 using AutoMapper;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Localization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -41,6 +42,7 @@ namespace NorthwindApp.UI
 
             services.AddDbContext<NorthwindDbContext>(
                 options => options.UseSqlServer(_configuration.GetConnectionString("NorthwindConnection")));
+            services.AddDefaultIdentity<IdentityUser>().AddEntityFrameworkStores<NorthwindDbContext>();
             services.AddScoped<DbContext>(x => x.GetService<NorthwindDbContext>());
 
             services.AddScoped<IProductRepository, ProductRepository>();
@@ -90,6 +92,8 @@ namespace NorthwindApp.UI
 
             app.UseStaticFiles();
             app.UseImagesCache();
+
+            app.UseAuthentication();
 
             app.UseMvc(routes =>
             {

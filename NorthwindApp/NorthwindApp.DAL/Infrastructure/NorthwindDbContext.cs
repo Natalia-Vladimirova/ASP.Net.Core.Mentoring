@@ -1,9 +1,10 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore;
 using NorthwindApp.DAL.Entities;
 
 namespace NorthwindApp.DAL.Infrastructure
 {
-    public class NorthwindDbContext : DbContext
+    public class NorthwindDbContext : IdentityDbContext
     {
         public NorthwindDbContext(DbContextOptions options)
             : base(options)

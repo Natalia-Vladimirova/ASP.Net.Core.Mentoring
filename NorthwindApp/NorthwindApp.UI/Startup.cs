@@ -21,6 +21,7 @@ using NorthwindApp.UI.Infrastructure.Filters;
 using NorthwindApp.UI.Infrastructure.Middleware;
 using NorthwindApp.UI.Interfaces;
 using NorthwindApp.UI.Services;
+using NorthwindApp.UI.Services.Email;
 using ConfigurationProvider = NorthwindApp.Core.Providers.ConfigurationProvider;
 using IConfigurationProvider = NorthwindApp.Core.Interfaces.IConfigurationProvider;
 
@@ -42,8 +43,18 @@ namespace NorthwindApp.UI
 
             services.AddDbContext<NorthwindDbContext>(
                 options => options.UseSqlServer(_configuration.GetConnectionString("NorthwindConnection")));
-            services.AddDefaultIdentity<IdentityUser>().AddEntityFrameworkStores<NorthwindDbContext>();
+            services.AddDefaultIdentity<IdentityUser>(config =>
+            {
+                config.Password.RequireNonAlphanumeric = false;
+                config.Password.RequireUppercase = false;
+                config.Password.RequireLowercase = false;
+            })
+            .AddEntityFrameworkStores<NorthwindDbContext>();
+
             services.AddScoped<DbContext>(x => x.GetService<NorthwindDbContext>());
+
+            services.AddTransient<IEmailSender, EmailSender>();
+            services.Configure<AuthMessageSenderOptions>(_configuration);
 
             services.AddScoped<IProductRepository, ProductRepository>();
             services.AddScoped<ICategoryRepository, CategoryRepository>();

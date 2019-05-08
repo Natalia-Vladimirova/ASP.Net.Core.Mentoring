@@ -8,6 +8,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.IdentityModel.Protocols.OpenIdConnect;
 using NorthwindApp.Core.Interfaces;
 using NorthwindApp.Core.Services;
 using NorthwindApp.DAL.Infrastructure;
@@ -76,6 +77,23 @@ namespace NorthwindApp.UI
                     x.GetService<IHostingEnvironment>().ContentRootPath));
 
             services.AddAutoMapper();
+
+            services.AddAuthentication()
+                .AddOpenIdConnect("AzureAD", "Azure AD", options =>
+                {
+                    var azureOptions = new AzureAdOptions();
+                    _configuration.Bind("AzureAd", azureOptions);
+
+                    options.ClientId = azureOptions.ClientId;
+                    options.ClientSecret = azureOptions.ClientSecret;
+                    options.Authority = $"{azureOptions.Instance}{azureOptions.TenantId}";
+                    options.CallbackPath = azureOptions.CallbackPath;
+                    options.ResponseType = OpenIdConnectResponseType.CodeIdToken;
+                    options.GetClaimsFromUserInfoEndpoint = true;
+                    options.RequireHttpsMetadata = false;
+                    options.UseTokenLifetime = true;
+                    options.SaveTokens = true;
+                });
 
             services.AddMvc(options => options.Filters.Add<LoggingFilter>())
                 .SetCompatibilityVersion(CompatibilityVersion.Version_2_2);

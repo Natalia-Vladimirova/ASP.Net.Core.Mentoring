@@ -1,6 +1,8 @@
 ﻿using Microsoft.AspNetCore;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.Extensions.DependencyInjection;
 using NorthwindApp.UI.Infrastructure.Extensions;
+using NorthwindApp.UI.Services;
 
 namespace NorthwindApp.UI
 {
@@ -8,7 +10,22 @@ namespace NorthwindApp.UI
     {
         public static void Main(string[] args)
         {
-            BuildWebHost(args).Run();
+            var host = BuildWebHost(args);
+
+            using (var scope = host.Services.CreateScope())
+            {
+                try
+                {
+                    scope.ServiceProvider
+                        .GetRequiredService<RoleService>()
+                        .InitializeRolesAsync()
+                        .GetAwaiter()
+                        .GetResult();
+                }
+                catch { }
+            }
+
+            host.Run();
         }
 
         public static IWebHost BuildWebHost(string[] args) =>

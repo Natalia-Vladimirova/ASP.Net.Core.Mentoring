@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
+using NorthwindApp.UI.Models;
 
 namespace NorthwindApp.UI.Areas.Identity.Pages.Account
 {
@@ -60,7 +61,9 @@ namespace NorthwindApp.UI.Areas.Identity.Pages.Account
 
                 if (result.Succeeded)
                 {
+                    await _userManager.AddToRoleAsync(user, UserRoles.User);
                     await _signInManager.SignInAsync(user, false);
+
                     return LocalRedirect(returnUrl);
                 }
 

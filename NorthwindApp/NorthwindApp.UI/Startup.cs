@@ -50,9 +50,12 @@ namespace NorthwindApp.UI
                 config.Password.RequireUppercase = false;
                 config.Password.RequireLowercase = false;
             })
+            .AddRoles<IdentityRole>()
             .AddEntityFrameworkStores<NorthwindDbContext>();
 
             services.AddScoped<DbContext>(x => x.GetService<NorthwindDbContext>());
+
+            services.AddScoped<RoleService>();
 
             services.AddTransient<IEmailSender, EmailSender>();
             services.Configure<AuthMessageSenderOptions>(_configuration);

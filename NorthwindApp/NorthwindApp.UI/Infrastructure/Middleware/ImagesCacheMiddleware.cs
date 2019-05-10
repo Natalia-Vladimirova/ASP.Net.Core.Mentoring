@@ -34,7 +34,7 @@ namespace NorthwindApp.UI.Infrastructure.Middleware
                 return;
             }
 
-            var fileName = Path.GetFileName(context.Request.Path.Value);
+            var fileName = Path.GetFileName(path.Value);
             var content = await _cacheService.GetAsync(fileName);
 
             if (content != null)

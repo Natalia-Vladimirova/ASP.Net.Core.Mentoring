@@ -1,7 +1,6 @@
-﻿using System;
-using System.IO;
-using System.Linq;
+﻿using System.IO;
 using System.Threading.Tasks;
+using Microsoft.Extensions.Caching.Memory;
 using Microsoft.Extensions.Options;
 using NorthwindApp.UI.Infrastructure.Configuration;
 using NorthwindApp.UI.Interfaces;
@@ -10,15 +9,20 @@ namespace NorthwindApp.UI.Services
 {
     public class DirectoryCacheService : ICacheService
     {
-        private readonly object _purgeLock = new object();
-
         private readonly FileCacheOptions _fileCacheOptions;
-        private readonly string _basePath;
+        private readonly string _cacheFolderPath;
+        private readonly IMemoryCache _memoryCache;
 
         public DirectoryCacheService(IOptions<FileCacheOptions> fileCacheOptions, string basePath)
         {
             _fileCacheOptions = fileCacheOptions.Value;
-            _basePath = basePath;
+            _cacheFolderPath = Path.Combine(basePath, _fileCacheOptions.ImageCacheFolderPath);
+            CreateCacheFolder();
+
+            _memoryCache = new MemoryCache(new MemoryCacheOptions
+            {
+                SizeLimit = _fileCacheOptions.MaxCachedImagesCount
+            });
         }
 
         public async Task<byte[]> GetAsync(string key)
@@ -28,106 +32,67 @@ namespace NorthwindApp.UI.Services
                 return null;
             }
 
-            var filePath = GetFilePath(key);
-
-            if (RemoveFileIfExpired(filePath, _fileCacheOptions.CacheExpirationTime))
+            try
+            {
+                var filePath = GetFilePath(key);
+                return await File.ReadAllBytesAsync(filePath);
+            }
+            catch
             {
                 return null;
             }
-
-            var content = await File.ReadAllBytesAsync(filePath);
-            UpdateCachedFileLastAccess(filePath);
-            PurgeExcessMemoryAsync();
-
-            return content;
         }
 
         public async Task AddAsync(string key, byte[] content)
         {
-            if (IsAvailableToCache())
+            try
             {
                 var filePath = GetFilePath(key);
                 await File.WriteAllBytesAsync(filePath, content);
-                UpdateCachedFileLastAccess(filePath);
             }
-
-            PurgeExcessMemoryAsync();
-        }
-
-        private bool RemoveFileIfExpired(string filePath, TimeSpan cacheExpirationTime)
-        {
-            if (GetCachedFileLastAccess(filePath) + cacheExpirationTime < DateTime.UtcNow)
+            catch
             {
-                File.Delete(filePath);
-                return true;
+                return;
             }
 
-            return false;
-        }
+            var cacheEntryOptions = new MemoryCacheEntryOptions()
+                .SetSize(1)
+                .SetSlidingExpiration(_fileCacheOptions.CacheExpirationTime)
+                .RegisterPostEvictionCallback(EvictionCallback);
 
-        private DateTime GetCachedFileLastAccess(string filePath)
-        {
-            var fileInfo = new FileInfo(filePath);
-            return fileInfo.LastAccessTimeUtc;
-        }
-
-        private void UpdateCachedFileLastAccess(string filePath)
-        {
-            var fileInfo = new FileInfo(filePath);
-            fileInfo.LastAccessTimeUtc = DateTime.UtcNow;
+            _memoryCache.Set(key, string.Empty, cacheEntryOptions);
         }
 
         private bool IsCached(string fileName)
         {
-            return Directory.EnumerateFiles(GetCacheFolderPath())
-                .FirstOrDefault(x => string.Equals(Path.GetFileName(x), fileName, StringComparison.OrdinalIgnoreCase)) != null;
+            return _memoryCache.TryGetValue(fileName, out string value);
         }
 
         private string GetFilePath(string fileName)
         {
-            return Path.Combine(GetCacheFolderPath(), fileName);
+            return Path.Combine(_cacheFolderPath, fileName);
         }
 
-        private string GetCacheFolderPath()
+        private void CreateCacheFolder()
         {
-            var cacheFolderPath = Path.Combine(_basePath, _fileCacheOptions.ImageCacheFolderPath);
-
-            if (!Directory.Exists(cacheFolderPath))
+            if (!Directory.Exists(_cacheFolderPath))
             {
-                Directory.CreateDirectory(cacheFolderPath);
+                Directory.CreateDirectory(_cacheFolderPath);
             }
-
-            return cacheFolderPath;
         }
 
-        private string[] GetCacheFilesPaths() => Directory.GetFiles(GetCacheFolderPath());
-
-        private bool IsAvailableToCache() => GetCacheFilesPaths().Length < _fileCacheOptions.MaxCachedImagesCount;
-
-        private void PurgeExcessMemoryAsync()
+        private void EvictionCallback(object key, object value, EvictionReason reason, object state)
         {
-            Task.Run(() =>
+            try
             {
-                if (IsAvailableToCache())
+                var filePath = GetFilePath((string)key);
+
+                if (File.Exists(filePath))
                 {
-                    return;
+                    File.Delete(filePath);
                 }
-
-                lock (_purgeLock)
-                {
-                    if (IsAvailableToCache())
-                    {
-                        return;
-                    }
-
-                    var cacheExpirationTime = _fileCacheOptions.CacheExpirationTime;
-
-                    foreach(var filePath in GetCacheFilesPaths())
-                    {
-                        RemoveFileIfExpired(filePath, cacheExpirationTime);
-                    }
-                }
-            });
+            }
+            catch { }
         }
     }
 }

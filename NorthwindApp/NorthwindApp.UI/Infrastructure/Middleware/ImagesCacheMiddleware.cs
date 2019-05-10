@@ -1,7 +1,6 @@
 ﻿using System.IO;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Builder;
-using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using NorthwindApp.Core.Interfaces;
 using NorthwindApp.UI.Interfaces;
@@ -11,18 +10,15 @@ namespace NorthwindApp.UI.Infrastructure.Middleware
     public class ImagesCacheMiddleware
     {
         private readonly RequestDelegate _next;
-        private readonly IHostingEnvironment _env;
         private readonly ICacheService _cacheService;
         private readonly IMimeHelper _mimeHelper;
 
         public ImagesCacheMiddleware(
             RequestDelegate next, 
-            IHostingEnvironment env, 
             ICacheService cacheService,
             IMimeHelper mimeHelper)
         {
             _next = next;
-            _env = env;
             _cacheService = cacheService;
             _mimeHelper = mimeHelper;
         }

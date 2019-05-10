@@ -1,5 +1,4 @@
-﻿using System;
-using Microsoft.Extensions.Configuration;
+﻿using Microsoft.Extensions.Configuration;
 
 namespace NorthwindApp.Core.Providers
 {
@@ -7,9 +6,6 @@ namespace NorthwindApp.Core.Providers
     {
         private const string DefaultProductPageSizeKey = "DefaultProductPageSize";
         private const string CategoryImageGarbageSizeKey = "CategoryImageGarbageSize";
-        private const string ImageCacheFolderPathKey = "ImageCacheFolderPath";
-        private const string MaxCachedImagesCountKey = "MaxCachedImagesCount";
-        private const string CacheExpirationTimeKey = "CacheExpirationTime";
         private const string LogActionMethodCallsKey = "LogActionMethodCalls";
 
         private readonly IConfiguration _configuration;
@@ -22,12 +18,6 @@ namespace NorthwindApp.Core.Providers
         public int DefaultProductPageSize => GetInt(DefaultProductPageSizeKey);
 
         public int CategoryImageGarbageSize => GetInt(CategoryImageGarbageSizeKey);
-
-        public string ImageCacheFolderPath => _configuration[ImageCacheFolderPathKey];
-
-        public int MaxCachedImagesCount => GetInt(MaxCachedImagesCountKey);
-
-        public TimeSpan CacheExpirationTime => TimeSpan.Parse(_configuration[CacheExpirationTimeKey]);
 
         public bool LogActionMethodCalls => GetBool(LogActionMethodCallsKey);
 

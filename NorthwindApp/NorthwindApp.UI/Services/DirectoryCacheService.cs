@@ -2,7 +2,8 @@
 using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
-using NorthwindApp.Core.Interfaces;
+using Microsoft.Extensions.Options;
+using NorthwindApp.UI.Infrastructure.Configuration;
 using NorthwindApp.UI.Interfaces;
 
 namespace NorthwindApp.UI.Services
@@ -11,12 +12,12 @@ namespace NorthwindApp.UI.Services
     {
         private readonly object _purgeLock = new object();
 
-        private readonly IConfigurationProvider _configurationProvider;
+        private readonly FileCacheOptions _fileCacheOptions;
         private readonly string _basePath;
 
-        public DirectoryCacheService(IConfigurationProvider configurationProvider, string basePath)
+        public DirectoryCacheService(IOptions<FileCacheOptions> fileCacheOptions, string basePath)
         {
-            _configurationProvider = configurationProvider;
+            _fileCacheOptions = fileCacheOptions.Value;
             _basePath = basePath;
         }
 
@@ -29,7 +30,7 @@ namespace NorthwindApp.UI.Services
 
             var filePath = GetFilePath(key);
 
-            if (RemoveFileIfExpired(filePath, _configurationProvider.CacheExpirationTime))
+            if (RemoveFileIfExpired(filePath, _fileCacheOptions.CacheExpirationTime))
             {
                 return null;
             }
@@ -89,7 +90,7 @@ namespace NorthwindApp.UI.Services
 
         private string GetCacheFolderPath()
         {
-            var cacheFolderPath = Path.Combine(_basePath, _configurationProvider.ImageCacheFolderPath);
+            var cacheFolderPath = Path.Combine(_basePath, _fileCacheOptions.ImageCacheFolderPath);
 
             if (!Directory.Exists(cacheFolderPath))
             {
@@ -101,7 +102,7 @@ namespace NorthwindApp.UI.Services
 
         private string[] GetCacheFilesPaths() => Directory.GetFiles(GetCacheFolderPath());
 
-        private bool IsAvailableToCache() => GetCacheFilesPaths().Length < _configurationProvider.MaxCachedImagesCount;
+        private bool IsAvailableToCache() => GetCacheFilesPaths().Length < _fileCacheOptions.MaxCachedImagesCount;
 
         private void PurgeExcessMemoryAsync()
         {
@@ -119,7 +120,7 @@ namespace NorthwindApp.UI.Services
                         return;
                     }
 
-                    var cacheExpirationTime = _configurationProvider.CacheExpirationTime;
+                    var cacheExpirationTime = _fileCacheOptions.CacheExpirationTime;
 
                     foreach(var filePath in GetCacheFilesPaths())
                     {

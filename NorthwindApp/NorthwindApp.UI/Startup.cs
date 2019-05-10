@@ -8,6 +8,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Protocols.OpenIdConnect;
 using NorthwindApp.Core.Interfaces;
 using NorthwindApp.Core.Services;
@@ -41,6 +42,7 @@ namespace NorthwindApp.UI
         public void ConfigureServices(IServiceCollection services)
         {
             services.Configure<Breadcrumb>(options => _configuration.GetSection("SiteMap").Bind(options));
+            services.Configure<FileCacheOptions>(_configuration);
 
             services.AddDbContext<NorthwindDbContext>(
                 options => options.UseSqlServer(_configuration.GetConnectionString("NorthwindConnection")));
@@ -76,7 +78,7 @@ namespace NorthwindApp.UI
             services.AddSingleton<IMimeHelper, MimeHelper>();
             services.AddSingleton<ICacheService, DirectoryCacheService>(
                 x => new DirectoryCacheService(
-                    x.GetService<IConfigurationProvider>(),
+                    x.GetService<IOptions<FileCacheOptions>>(),
                     x.GetService<IHostingEnvironment>().ContentRootPath));
 
             services.AddAutoMapper();

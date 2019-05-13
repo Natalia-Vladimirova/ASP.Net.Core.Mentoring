@@ -39,6 +39,7 @@ namespace NorthwindApp.UI.Services
             }
             catch
             {
+                //catch any exception in order not to break execution if any error occurs when reading a file
                 return null;
             }
         }
@@ -52,6 +53,7 @@ namespace NorthwindApp.UI.Services
             }
             catch
             {
+                //catch any exception in order not to break execution if any error occurs when writing a file
                 return;
             }
 
@@ -65,7 +67,7 @@ namespace NorthwindApp.UI.Services
 
         private bool IsCached(string fileName)
         {
-            return _memoryCache.TryGetValue(fileName, out string value);
+            return _memoryCache.TryGetValue(fileName, out string _);
         }
 
         private string GetFilePath(string fileName)
@@ -85,14 +87,17 @@ namespace NorthwindApp.UI.Services
         {
             try
             {
-                var filePath = GetFilePath((string)key);
+                var filePath = GetFilePath((string) key);
 
                 if (File.Exists(filePath))
                 {
                     File.Delete(filePath);
                 }
             }
-            catch { }
+            catch
+            {
+                //catch any exception in order not to break execution if any error occurs when removing a file
+            }
         }
     }
 }

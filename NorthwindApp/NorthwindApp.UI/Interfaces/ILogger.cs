@@ -5,6 +5,8 @@ namespace NorthwindApp.UI.Interfaces
 {
     public interface ILogger
     {
+        void LogInfo(string info);
+
         void LogInfo(string info, IDictionary<string, string> properties);
 
         void LogError(Exception exception, IDictionary<string, string> properties);

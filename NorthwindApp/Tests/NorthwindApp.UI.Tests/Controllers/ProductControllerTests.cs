@@ -3,13 +3,14 @@ using System.Linq;
 using System.Threading.Tasks;
 using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Options;
 using Moq;
 using NorthwindApp.Models;
 using NorthwindApp.Services.Interfaces;
 using NorthwindApp.UI.Controllers;
+using NorthwindApp.UI.Infrastructure.Configuration;
 using NorthwindApp.UI.Models;
 using Xunit;
-using IConfigurationProvider = NorthwindApp.Core.Interfaces.IConfigurationProvider;
 
 namespace NorthwindApp.UI.Tests.Controllers
 {
@@ -21,7 +22,6 @@ namespace NorthwindApp.UI.Tests.Controllers
         private readonly Mock<ICategoryService> _categoryServiceMock;
         private readonly Mock<ISupplierService> _supplierServiceMock;
         private readonly Mock<IMapper> _mapperMock;
-        private readonly Mock<IConfigurationProvider> _configurationProviderMock;
 
         private const int ProductsCount = 66;
         private const int NotFoundProductId = 13;
@@ -55,16 +55,16 @@ namespace NorthwindApp.UI.Tests.Controllers
                     ProductName = product.ProductName
                 });
 
-            _configurationProviderMock = new Mock<IConfigurationProvider>();
-            _configurationProviderMock.Setup(x => x.DefaultProductPageSize)
-                .Returns(ProductsCount);
+            var productPageOptionsMock = new Mock<IOptions<ProductPageOptions>>();
+            productPageOptionsMock.Setup(x => x.Value)
+                .Returns(new ProductPageOptions { DefaultProductPageSize = ProductsCount });
 
             _productController = new ProductController(
                 _productServiceMock.Object,
                 _categoryServiceMock.Object,
                 _supplierServiceMock.Object,
                 _mapperMock.Object,
-                _configurationProviderMock.Object);
+                productPageOptionsMock.Object);
         }
 
         [Fact]
@@ -81,7 +81,6 @@ namespace NorthwindApp.UI.Tests.Controllers
             Assert.Equal(ProductId, products[0].ProductId);
             Assert.Equal(ProductName, products[0].ProductName);
 
-            _configurationProviderMock.Verify(x => x.DefaultProductPageSize, Times.Once);
             _productServiceMock.Verify(x => x.GetProductsAsync(page, ProductsCount), Times.Once);
             _mapperMock.Verify(x => x.Map<ProductViewModel>(It.Is<Product>(y => y.ProductId == ProductId)), Times.Once);
         }

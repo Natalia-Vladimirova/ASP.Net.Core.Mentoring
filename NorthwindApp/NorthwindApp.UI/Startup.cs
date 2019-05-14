@@ -16,6 +16,7 @@ using NorthwindApp.DAL.Infrastructure;
 using NorthwindApp.DAL.Interfaces;
 using NorthwindApp.DAL.Repositories;
 using NorthwindApp.Services;
+using NorthwindApp.Services.Configuration;
 using NorthwindApp.Services.Interfaces;
 using NorthwindApp.UI.Infrastructure.Builders;
 using NorthwindApp.UI.Infrastructure.Configuration;
@@ -23,9 +24,6 @@ using NorthwindApp.UI.Infrastructure.Filters;
 using NorthwindApp.UI.Infrastructure.Middleware;
 using NorthwindApp.UI.Interfaces;
 using NorthwindApp.UI.Services;
-using NorthwindApp.UI.Services.Email;
-using ConfigurationProvider = NorthwindApp.Core.Providers.ConfigurationProvider;
-using IConfigurationProvider = NorthwindApp.Core.Interfaces.IConfigurationProvider;
 
 namespace NorthwindApp.UI
 {
@@ -42,7 +40,11 @@ namespace NorthwindApp.UI
         public void ConfigureServices(IServiceCollection services)
         {
             services.Configure<Breadcrumb>(options => _configuration.GetSection("SiteMap").Bind(options));
+            services.Configure<ProductPageOptions>(_configuration);
+            services.Configure<CategoryImageOptions>(_configuration);
+            services.Configure<LoggingOptions>(_configuration);
             services.Configure<FileCacheOptions>(_configuration);
+            services.Configure<AuthMessageSenderOptions>(_configuration);
 
             services.AddDbContext<NorthwindDbContext>(
                 options => options.UseSqlServer(_configuration.GetConnectionString("NorthwindConnection")));
@@ -60,7 +62,6 @@ namespace NorthwindApp.UI
             services.AddScoped<RoleService>();
 
             services.AddTransient<IEmailSender, EmailSender>();
-            services.Configure<AuthMessageSenderOptions>(_configuration);
 
             services.AddScoped<IProductRepository, ProductRepository>();
             services.AddScoped<ICategoryRepository, CategoryRepository>();
@@ -72,7 +73,6 @@ namespace NorthwindApp.UI
 
             services.AddScoped<ISiteMapBuilder, SiteMapBuilder>();
 
-            services.AddSingleton<IConfigurationProvider, ConfigurationProvider>();
             services.AddSingleton<ILogger, AppInsightsLogger>();
 
             services.AddSingleton<IMimeHelper, MimeHelper>();

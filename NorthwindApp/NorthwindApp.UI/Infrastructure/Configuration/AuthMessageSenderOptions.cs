@@ -1,4 +1,4 @@
-﻿namespace NorthwindApp.UI.Services.Email
+﻿namespace NorthwindApp.UI.Infrastructure.Configuration
 {
     public class AuthMessageSenderOptions
     {

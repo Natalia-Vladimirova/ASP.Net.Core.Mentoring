@@ -15,10 +15,9 @@ using NorthwindApp.DAL.Infrastructure;
 using NorthwindApp.DAL.Interfaces;
 using NorthwindApp.DAL.Repositories;
 using NorthwindApp.Services;
+using NorthwindApp.Services.Configuration;
 using NorthwindApp.Services.Interfaces;
 using Swashbuckle.AspNetCore.Swagger;
-using ConfigurationProvider = NorthwindApp.Core.Providers.ConfigurationProvider;
-using IConfigurationProvider = NorthwindApp.Core.Interfaces.IConfigurationProvider;
 
 namespace NorthwindApp.Api
 {
@@ -33,6 +32,8 @@ namespace NorthwindApp.Api
 
         public void ConfigureServices(IServiceCollection services)
         {
+            services.Configure<CategoryImageOptions>(_configuration);
+
             services.AddDbContext<NorthwindDbContext>(
                 options => options.UseSqlServer(_configuration.GetConnectionString("NorthwindConnection")));
             services.AddScoped<DbContext>(x => x.GetService<NorthwindDbContext>());
@@ -43,7 +44,6 @@ namespace NorthwindApp.Api
             services.AddScoped<IProductService, ProductService>();
             services.AddScoped<ICategoryService, CategoryService>();
 
-            services.AddSingleton<IConfigurationProvider, ConfigurationProvider>();
             services.AddSingleton<IMimeHelper, MimeHelper>();
 
             services.AddAutoMapper();

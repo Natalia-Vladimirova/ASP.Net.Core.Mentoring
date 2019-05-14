@@ -3,11 +3,12 @@ using System.Threading.Tasks;
 using AutoMapper;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Options;
 using NorthwindApp.Models;
 using NorthwindApp.Services.Interfaces;
+using NorthwindApp.UI.Infrastructure.Configuration;
 using NorthwindApp.UI.Models;
 using X.PagedList;
-using IConfigurationProvider = NorthwindApp.Core.Interfaces.IConfigurationProvider;
 
 namespace NorthwindApp.UI.Controllers
 {
@@ -18,25 +19,26 @@ namespace NorthwindApp.UI.Controllers
         private readonly ICategoryService _categoryService;
         private readonly ISupplierService _supplierService;
         private readonly IMapper _mapper;
-        private readonly IConfigurationProvider _configurationProvider;
+        private readonly ProductPageOptions _productPageOptions;
 
         public ProductController(
             IProductService productService,
             ICategoryService categoryService,
             ISupplierService supplierService,
             IMapper mapper,
-            IConfigurationProvider configurationProvider)
+            IOptions<ProductPageOptions> productPageOptions)
         {
             _productService = productService;
             _categoryService = categoryService;
             _supplierService = supplierService;
             _mapper = mapper;
-            _configurationProvider = configurationProvider;
+            _productPageOptions = productPageOptions.Value;
         }
 
-        public async Task<IActionResult> Index(int page = 1)
+        [HttpGet]
+        public async Task<IActionResult> Index(int pageNumber = 1)
         {
-            var products = await GetPagedList(page);
+            var products = await GetPagedList(pageNumber);
 
             return View(products);
         }
@@ -98,7 +100,7 @@ namespace NorthwindApp.UI.Controllers
 
         private async Task<StaticPagedList<ProductViewModel>> GetPagedList(int page)
         {
-            var pageSize = _configurationProvider.DefaultProductPageSize;
+            var pageSize = _productPageOptions.DefaultProductPageSize;
             var totalCount = await _productService.GetProductsCountAsync();
 
             var products = (await _productService.GetProductsAsync(page, pageSize))

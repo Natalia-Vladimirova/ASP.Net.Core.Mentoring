@@ -15,6 +15,11 @@ namespace NorthwindApp.UI.Services
             _client = new TelemetryClient();
         }
 
+        public void LogInfo(string info)
+        {
+            _client.TrackTrace(info, SeverityLevel.Information);
+        }
+
         public void LogInfo(string info, IDictionary<string, string> properties)
         {
             _client.TrackTrace(info, SeverityLevel.Information, properties);

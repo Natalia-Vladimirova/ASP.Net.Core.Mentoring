@@ -1,10 +1,11 @@
 ﻿using System.Threading.Tasks;
 using Microsoft.Extensions.Options;
+using NorthwindApp.UI.Infrastructure.Configuration;
 using NorthwindApp.UI.Interfaces;
 using SendGrid;
 using SendGrid.Helpers.Mail;
 
-namespace NorthwindApp.UI.Services.Email
+namespace NorthwindApp.UI.Services
 {
     public class EmailSender : IEmailSender
     {

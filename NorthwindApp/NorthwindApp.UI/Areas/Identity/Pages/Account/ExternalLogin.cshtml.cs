@@ -1,10 +1,13 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using System.Linq;
 using System.Security.Claims;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
+using NorthwindApp.UI.Interfaces;
+using NorthwindApp.UI.Models;
 
 namespace NorthwindApp.UI.Areas.Identity.Pages.Account
 {
@@ -13,13 +16,16 @@ namespace NorthwindApp.UI.Areas.Identity.Pages.Account
     {
         private readonly SignInManager<IdentityUser> _signInManager;
         private readonly UserManager<IdentityUser> _userManager;
+        private readonly IActiveDirectoryProvider _activeDirectoryProvider;
 
         public ExternalLoginModel(
             SignInManager<IdentityUser> signInManager,
-            UserManager<IdentityUser> userManager)
+            UserManager<IdentityUser> userManager,
+            IActiveDirectoryProvider activeDirectoryProvider)
         {
             _signInManager = signInManager;
             _userManager = userManager;
+            _activeDirectoryProvider = activeDirectoryProvider;
         }
 
         [BindProperty]
@@ -116,7 +122,17 @@ namespace NorthwindApp.UI.Areas.Identity.Pages.Account
                     result = await _userManager.AddLoginAsync(user, info);
                     if (result.Succeeded)
                     {
-                        await _signInManager.SignInAsync(user, isPersistent: false);
+                        var groupClaims = info.Principal.Claims
+                            .Where(x => x.Type == CustomClaimTypes.Groups)
+                            .Select(c => c.Value);
+
+                        var userRoleClaims = _activeDirectoryProvider
+                            .GetGroupNames(groupClaims)
+                            .Select(x => new Claim(ClaimTypes.Role, x));
+
+                        await _userManager.AddClaimsAsync(user, userRoleClaims);
+
+                        await _signInManager.SignInAsync(user, false);
                         return LocalRedirect(returnUrl);
                     }
                 }

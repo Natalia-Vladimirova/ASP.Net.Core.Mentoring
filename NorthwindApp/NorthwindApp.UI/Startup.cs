@@ -45,6 +45,7 @@ namespace NorthwindApp.UI
             services.Configure<LoggingOptions>(_configuration);
             services.Configure<FileCacheOptions>(_configuration);
             services.Configure<AuthMessageSenderOptions>(_configuration);
+            services.Configure<AzureAdGroupConfig>(options => _configuration.Bind("AzureAdGroupConfig", options));
 
             services.AddDbContext<NorthwindDbContext>(
                 options => options.UseSqlServer(_configuration.GetConnectionString("NorthwindConnection")));
@@ -60,6 +61,7 @@ namespace NorthwindApp.UI
             services.AddScoped<DbContext>(x => x.GetService<NorthwindDbContext>());
 
             services.AddScoped<RoleService>();
+            services.AddScoped<IActiveDirectoryProvider, ActiveDirectoryProvider>();
 
             services.AddTransient<IEmailSender, EmailSender>();
 
@@ -94,7 +96,6 @@ namespace NorthwindApp.UI
                     options.Authority = $"{azureOptions.Instance}{azureOptions.TenantId}";
                     options.CallbackPath = azureOptions.CallbackPath;
                     options.ResponseType = OpenIdConnectResponseType.CodeIdToken;
-                    options.GetClaimsFromUserInfoEndpoint = true;
                     options.RequireHttpsMetadata = false;
                     options.UseTokenLifetime = true;
                     options.SaveTokens = true;

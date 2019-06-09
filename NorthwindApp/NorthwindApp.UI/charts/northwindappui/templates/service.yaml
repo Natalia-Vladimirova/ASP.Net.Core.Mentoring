@@ -1,0 +1,19 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ template "northwindappui.fullname" . }}
+  labels:
+    app: {{ template "northwindappui.name" . }}
+    chart: {{ template "northwindappui.chart" . }}
+    release: {{ .Release.Name }}
+    heritage: {{ .Release.Service }}
+spec:
+  type: {{ .Values.service.type }}
+  ports:
+    - port: {{ .Values.service.port }}
+      targetPort: http
+      protocol: TCP
+      name: http
+  selector:
+    app: {{ template "northwindappui.name" . }}
+    release: {{ .Release.Name }}

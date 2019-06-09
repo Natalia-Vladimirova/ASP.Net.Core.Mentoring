@@ -1,0 +1,23 @@
+FROM mcr.microsoft.com/dotnet/core/sdk:2.2
+ARG BUILD_CONFIGURATION=Debug
+ENV ASPNETCORE_ENVIRONMENT=Development
+ENV DOTNET_USE_POLLING_FILE_WATCHER=true
+EXPOSE 80
+
+WORKDIR /src
+COPY ["NorthwindApp.Core/NorthwindApp.Core.csproj", "NorthwindApp.Core/"]
+COPY ["NorthwindApp.DAL.Interfaces/NorthwindApp.DAL.Interfaces.csproj", "NorthwindApp.DAL.Interfaces/"]
+COPY ["NorthwindApp.DAL/NorthwindApp.DAL.csproj", "NorthwindApp.DAL/"]
+COPY ["NorthwindApp.Models/NorthwindApp.Models.csproj", "NorthwindApp.Models/"]
+COPY ["NorthwindApp.Services.Interfaces/NorthwindApp.Services.Interfaces.csproj", "NorthwindApp.Services.Interfaces/"]
+COPY ["NorthwindApp.Services/NorthwindApp.Services.csproj", "NorthwindApp.Services/"]
+COPY ["NorthwindApp.UI/NorthwindApp.UI.csproj", "NorthwindApp.UI/"]
+
+RUN dotnet restore "NorthwindApp.UI/NorthwindApp.UI.csproj"
+COPY . .
+WORKDIR "/src/NorthwindApp.UI"
+RUN dotnet build --no-restore "NorthwindApp.UI.csproj" -c $BUILD_CONFIGURATION
+
+RUN echo "exec dotnet run --no-build --no-launch-profile -c $BUILD_CONFIGURATION --" > /entrypoint.sh
+
+ENTRYPOINT ["/bin/bash", "/entrypoint.sh"]

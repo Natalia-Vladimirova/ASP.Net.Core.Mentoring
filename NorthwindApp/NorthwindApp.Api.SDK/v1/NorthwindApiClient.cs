@@ -379,20 +379,8 @@ namespace NorthwindApp.Api.SDK.v1
             // Deserialize Response
             if ((int)_statusCode == 200)
             {
-                _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
-                try
-                {
-                    _result.Body = SafeJsonConvert.DeserializeObject<byte[]>(_responseContent, DeserializationSettings);
-                }
-                catch (JsonException ex)
-                {
-                    _httpRequest.Dispose();
-                    if (_httpResponse != null)
-                    {
-                        _httpResponse.Dispose();
-                    }
-                    throw new SerializationException("Unable to deserialize the response.", _responseContent, ex);
-                }
+                //todo: auto-generated code is incorrect; this is a temporary fix to get image correctly
+                _result.Body = await _httpResponse.Content.ReadAsByteArrayAsync().ConfigureAwait(false);
             }
             // Deserialize Response
             if ((int)_statusCode == 404)
